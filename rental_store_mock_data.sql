@@ -500,7 +500,7 @@ insert into STORECUSTOMERS (customerid, first_name, last_name, phone_number, add
 insert into STORECUSTOMERS (customerid, first_name, last_name, phone_number, address, late_fees, referredby) values ('207300516-0', 'Bonnie', 'Fox', '86-(331)278-6577', '4 Birchwood Hill', 78, '185516931-2');
 
 --specials
-insert into Specials (specialid, title, discount) values ('03-1059950', 'Konklux', 2.69
+insert into Specials (specialid, title, discount) values ('03-1059950', 'Konklux', 2.69);
 insert into Specials (specialid, title, discount) values ('43-8426902', 'Sub-Ex', 1.54);
 insert into Specials (specialid, title, discount) values ('70-5831373', 'Ventosanzap', 1.48);
 insert into Specials (specialid, title, discount) values ('84-1469852', 'Zontrax', 1.15);
