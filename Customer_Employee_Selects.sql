@@ -47,7 +47,18 @@ first_name, last_name,
 TO_NUMBER(TO_DATE(current_date) - TO_DATE(return_date))
 order by days_late;
 
+--rent movie
+CREATE OR REPLACE PROCEDURE RentMovie(custID IN VARCHAR2, movID IN VARCHAR2)
+AS
+  SerialNumber VARCHAR2(64);
+  MovPrice NUMBER(4);
+BEGIN
+	  Select SerialNum, Price INTO SerialNumber, MovPrice FROM Movies where movies.MovieID = movID;
+	  INSERT INTO rentals
+	  VALUES('R'||custID||movID, custID, 'DM1234', movID, SerialNumber,TO_DATE(CURRENT_DATE,'YYYY-MM-DD'), TO_DATE('2017-06- 29','YYYY-MM-DD'), MovPrice, null, MovPrice);
+END;
 
+execute RentMovie('0001', '0003');
 
 --Film in stock – Create a subprogram that determines if a film is currently available for rent.
 /*
