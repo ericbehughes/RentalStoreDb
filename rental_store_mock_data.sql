@@ -1,3 +1,175 @@
+/*
+DROP TABLE ACTORS CASCADE CONSTRAINTS;
+DROP TABLE EMPLOYEES CASCADE CONSTRAINTS;
+DROP TABLE HOURS CASCADE CONSTRAINTS;
+DROP TABLE INVENTORY CASCADE CONSTRAINTS;
+DROP TABLE MOVIECUSTOMERS CASCADE CONSTRAINTS;
+DROP TABLE MOVIES CASCADE CONSTRAINTS;
+DROP TABLE RENTALS CASCADE CONSTRAINTS;
+DROP TABLE SPECIALS CASCADE CONSTRAINTS;
+DROP TABLE EMPLOYEES CASCADE CONSTRAINTS;
+DROP TABLE SCHEDULE CASCADE CONSTRAINTS;
+DROP TABLE STORECUSTOMERS CASCADE CONSTRAINTS;
+DROP TABLE SHIPMENTS CASCADE CONSTRAINTS;
+DROP TABLE Movieactors cascade constraints;
+DROP TABLE credentials cascade constraints;
+DROP TABLE rentallog cascade constraints;
+*/
+CREATE TABLE Specials
+(
+SpecialID VARCHAR2(64),
+Title VARCHAR2(64),
+Discount NUMBER(4),
+  CONSTRAINT Specials_SpecialID_pk PRIMARY KEY(SpecialID)
+);
+
+CREATE TABLE Movies 
+(
+MovieID VARCHAR2(64),
+SerialNum VARCHAR2(64) NOT NULL,
+Title  VARCHAR2(64) NOT NULL,
+Price NUMBER(6,2) NOT NULL,
+Rating NUMBER(4),
+Release_Date DATE,
+Genre VARCHAR2(64),
+IsOnSpecial CHAR(1),
+SpecialID VARCHAR2(64),
+  CONSTRAINT Movies_MovieID_pk PRIMARY KEY(MovieID),
+  CONSTRAINT Movies_SpecialID_fk FOREIGN KEY (SpecialID)
+    REFERENCES Specials(SpecialID)
+);
+
+CREATE TABLE StoreCustomers  
+(
+CustomerID VARCHAR2(64),
+First_Name VARCHAR2(64) NOT NULL,
+Last_Name VARCHAR2(64) NOT NULL,
+Phone_Number VARCHAR2(64) NOT NULL,
+Address VARCHAR2(64) NOT NULL,
+Late_Fees NUMBER(6,2),
+ReferredBy VARCHAR2(64),
+  CONSTRAINT StoreCustomers_CustomerID_pk PRIMARY KEY(CustomerID)
+);
+  
+  
+CREATE TABLE Actors 
+(
+ActorID VARCHAR2(64),
+First_Name VARCHAR2(64) NOT NULL,
+Last_Name VARCHAR2(64) NOT NULL,
+  CONSTRAINT Actors_ActorID_pk PRIMARY KEY(ActorID)
+);
+
+CREATE TABLE MovieActors
+(ActorID VARCHAR2(64), 
+ MovieID VARCHAR2(64), 
+  CONSTRAINT MovieActors_pk PRIMARY KEY (ActorID, MovieID),
+  CONSTRAINT MovieActors_ActorID_fk FOREIGN KEY (ActorID)
+             REFERENCES Actors (ActorID),
+  CONSTRAINT MovieActors_MovieID_fk FOREIGN KEY (MovieID)
+             REFERENCES Movies (MovieID));   
+	
+CREATE TABLE Employees
+(
+EmployeeID VARCHAR2(64),
+ManagerID VARCHAR2(64) NOT NULL,
+Address VARCHAR2(64) NOT NULL,
+First_Name VARCHAR2(64) NOT NULL,
+Last_Name VARCHAR2(64) NOT NULL,
+Phone_Number VARCHAR2(64) NOT NULL,
+Title VARCHAR2(64) NOT NULL,
+Salary NUMBER(20,2) NOT NULL,
+Hire_Date DATE NOT NULL,
+	CONSTRAINT Employees_EmployeeID_pk PRIMARY KEY(EmployeeID)
+);
+
+CREATE TABLE Shipments
+(
+ShipmentID VARCHAR2(64),
+MovieID VARCHAR2(64),
+Ship_Date DATE NOT NULL,
+Ship_Street VARCHAR2(64) NOT NULL,
+Ship_Country VARCHAR2(64) NOT NULL,
+Title VARCHAR2(64),
+Price NUMBER(6,2),
+Genre VARCHAR2(64),
+EmployeeID VARCHAR2(64),
+ShipmentQuantity NUMBER(4),
+  CONSTRAINT Shipments_ShipmentID_pk PRIMARY KEY(ShipmentID),
+  CONSTRAINT Shipments_MovieID_fk FOREIGN KEY(MovieID)
+  REFERENCES Movies(MovieID),
+  CONSTRAINT Shipments_EmployeeID_fk FOREIGN KEY(EmployeeID)
+  REFERENCES Employees(EmployeeID)
+);
+
+CREATE TABLE Inventory
+(ShipmentID VARCHAR2(64), 
+ MovieID VARCHAR2(64),
+ TotalInStock NUMBER(4),
+ TotalAvailable NUMBER(4),
+  CONSTRAINT Inventory_pk PRIMARY KEY (ShipmentID, MovieID),
+  CONSTRAINT Inventory_ShipID_fk FOREIGN KEY (ShipmentID)
+             REFERENCES Shipments (ShipmentID),
+  CONSTRAINT Inventory_MovieID_fk FOREIGN KEY (MovieID)
+             REFERENCES Movies (MovieID)
+);
+
+CREATE TABLE Rentals
+(
+RentalID VARCHAR2(64),
+CustomerID VARCHAR2(64),
+EmployeeID VARCHAR2(64),
+MovieID VARCHAR2(64),
+SerialNumber VARCHAR2(64),
+Date_Rented DATE NOT NULL,
+Return_Date DATE NOT NULL,
+Price Number(6,2),
+SpecialID VARCHAR2(64),
+Paid Number(6,2),
+Returned CHAR(1),
+  CONSTRAINT Rentals_RentalID_pk Primary KEY(RentalID),
+  CONSTRAINT Rentals_MovieID_fk FOREIGN KEY(MovieID)
+  REFERENCES Movies(MovieID),
+  CONSTRAINT Rentals_CustomerID_fk FOREIGN KEY(CustomerID)
+  REFERENCES StoreCustomers(CustomerID),
+  CONSTRAINT Rentals_SpecialID_fk FOREIGN KEY(SpecialID)
+  REFERENCES Specials(SpecialID),
+  CONSTRAINT Rentals_EmployeeID_fk FOREIGN KEY(EmployeeID)
+  REFERENCES Employees(EmployeeID)
+);
+  
+  
+CREATE TABLE Schedule
+  (
+EmployeeID VARCHAR2(64),
+CheckInTime VARCHAR2(64) NOT NULL,
+CheckOutTime VARCHAR2(64) NOT NULL,
+WorkDate DATE NOT NULL,
+WeeklyHours NUMBER(4) NOT NULL,
+    CONSTRAINT Hours_EmployeeId_fk FOREIGN KEY(EmployeeID)
+    REFERENCES Employees(EmployeeID)
+);
+
+CREATE TABLE Credentials
+(
+UserID VARCHAR2(64),
+Hash VARCHAR2(64) NOT NULL,
+Salt VARCHAR2(64) NOT NULL,
+  CONSTRAINT Credentials_UserID_pk PRIMARY KEY(Userid)
+);
+
+  CREATE TABLE RentalLog
+(
+LogID VARCHAR2(64),
+RentalID VARCHAR2(64),
+Log_Date DATE NOT NULL,
+RentedOrReturned VARCHAR2(64) NOT NULL CHECK(RentedOrReturned IN('Rented', 'Returned')),
+  CONSTRAINT RentalLog_LogID_Pk PRIMARY KEY (LogID),
+  
+  CONSTRAINT RentalLog_RentalID_fk FOREIGN KEY (RentalID)
+  REFERENCES Rentals(RentalID)
+);
+
 insert into STORECUSTOMERS (customerid, first_name, last_name, phone_number, address, late_fees, referredby) values ('522237612-5', 'Howard', 'Romero', '62-(570)630-1047', '6 Kensington Alley', 70, '269714963-5');
 insert into STORECUSTOMERS (customerid, first_name, last_name, phone_number, address, late_fees, referredby) values ('361848077-6', 'Nicholas', 'Gibson', '7-(596)759-2953', '491 Little Fleur Street', 24, '517318433-7');
 insert into STORECUSTOMERS (customerid, first_name, last_name, phone_number, address, late_fees, referredby) values ('211746369-X', 'Randy', 'Rose', '216-(109)965-0995', '6447 Fairview Street', 57, '582748715-5');
@@ -507,107 +679,106 @@ insert into Specials (specialid, title, discount) values ('84-1469852', 'Zontrax
 insert into Specials (specialid, title, discount) values ('50-4392985', 'Voyatouch', 7.18);
 
 -- movies
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('73-8265338', '255556316-4', 'Pannier', 13.26, 1, to_date('1991-06-20', 'yyyy-mm-dd'), 'bifurcated', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('46-1421504', '720329589-3', 'Biodex', 9.5, 2, to_date('2009-04-30', 'yyyy-mm-dd'), 'firmware', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('97-5362702', '810417522-X', 'Tres-Zap', 6.03, 3, to_date('1999-01-25', 'yyyy-mm-dd'), 'motivating', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('76-6555137', '905235489-8', 'Alpha', 28.04, 4, to_date('2007-04-01', 'yyyy-mm-dd'), 'Multi-layered', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('08-3281675', '557738168-1', 'Tres-Zap', 18.31, 5, to_date('2001-11-08', 'yyyy-mm-dd'), 'matrices', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('65-1698400', '621374550-5', 'Regrant', 7.96, 6, to_date('1998-04-10', 'yyyy-mm-dd'), 'Devolved', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('39-9922479', '610371485-0', 'Ventosanzap', 21.19, 7, to_date('1993-07-12', 'yyyy-mm-dd'), 'Graphical User Interface', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('90-7436212', '093303497-0', 'Bitchip', 2.67, 8, to_date('2010-07-05', 'yyyy-mm-dd'), 'executive', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('89-8454499', '632364756-7', 'Cardguard', 10.33, 9, to_date('1996-08-01', 'yyyy-mm-dd'), 'system-worthy', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('51-0760472', '608230575-2', 'Konklab', 14.0, 10, to_date('2005-01-07', 'yyyy-mm-dd'), 'Open-source', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('57-2611019', '800016413-2', 'Voyatouch', 17.78, 11, to_date('2000-05-22', 'yyyy-mm-dd'), 'solution-oriented', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('71-8961183', '322371254-2', 'Job', 7.35, 12, to_date('2003-01-21', 'yyyy-mm-dd'), 'Diverse', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('82-5969295', '606398665-0', 'Veribet', 15.47, 13, to_date('2012-06-14', 'yyyy-mm-dd'), 'parallelism', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('56-1438689', '705149134-2', 'Tresom', 10.36, 14, to_date('2002-10-08', 'yyyy-mm-dd'), 'client-server', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('01-5371873', '422056498-5', 'Kanlam', 18.11, 15, to_date('2005-02-25', 'yyyy-mm-dd'), 'extranet', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('09-5356081', '269719717-6', 'Bamity', 11.24, 16, to_date('1998-08-23', 'yyyy-mm-dd'), 'protocol', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('69-4680867', '356831810-5', 'Zoolab', 21.44, 17, to_date('2006-02-15', 'yyyy-mm-dd'), 'encompassing', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('18-4023754', '557909751-4', 'Tampflex', 7.62, 18, to_date('1990-06-16', 'yyyy-mm-dd'), 'secondary', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('48-2852655', '370055606-3', 'Zathin', 12.78, 19, to_date('1991-01-22', 'yyyy-mm-dd'), 'Progressive', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('78-7659141', '448774166-1', 'Tresom', 9.81, 20, to_date('2009-04-25', 'yyyy-mm-dd'), 'interface', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('20-1683353', '995910234-3', 'Rank', 27.53, 21, to_date('2000-04-17', 'yyyy-mm-dd'), 'intermediate', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('60-3604497', '300341959-5', 'Cardify', 24.26, 22, to_date('2000-05-03', 'yyyy-mm-dd'), 'Cloned', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('02-2806400', '234643340-3', 'Wrapsafe', 21.16, 23, to_date('2010-05-11', 'yyyy-mm-dd'), 'pricing structure', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('23-8182019', '297105755-0', 'Zathin', 23.31, 24, to_date('1990-12-13', 'yyyy-mm-dd'), 'systematic', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('48-0086984', '864824803-5', 'Temp', 18.24, 25, to_date('1990-12-19', 'yyyy-mm-dd'), 'circuit', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('33-2481165', '381481336-7', 'Zaam-Dox', 15.58, 26, to_date('1992-04-29', 'yyyy-mm-dd'), 'adapter', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('34-4869842', '424586565-2', 'Cardify', 2.14, 27, to_date('2006-10-31', 'yyyy-mm-dd'), 'high-level', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('93-9646714', '363960030-4', 'Lotlux', 20.05, 28, to_date('1990-07-18', 'yyyy-mm-dd'), 'strategy', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('36-2571856', '319391434-7', 'Bamity', 3.82, 29, to_date('2006-09-18', 'yyyy-mm-dd'), 'foreground', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('31-7497843', '589241912-6', 'Tres-Zap', 14.28, 30, to_date('2007-03-16', 'yyyy-mm-dd'), 'Devolved', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('46-5793201', '887123919-9', 'Bigtax', 15.82, 31, to_date('1994-05-10', 'yyyy-mm-dd'), 'radical', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('14-0985497', '663191551-1', 'Keylex', 29.88, 32, to_date('2002-02-01', 'yyyy-mm-dd'), 'capability', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('92-2988013', '966514095-7', 'Mat Lam Tam', 5.21, 33, to_date('1997-06-22', 'yyyy-mm-dd'), 'Ergonomic', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('39-3358245', '485438860-9', 'Matsoft', 20.91, 34, to_date('1994-06-26', 'yyyy-mm-dd'), 'knowledge base', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('48-7669569', '101767690-9', 'It', 7.22, 35, to_date('2011-12-26', 'yyyy-mm-dd'), 'content-based', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('67-4391442', '113895041-6', 'Otcom', 8.43, 36, to_date('2005-10-20', 'yyyy-mm-dd'), 'initiative', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('81-6585139', '353963437-1', 'Konklab', 29.57, 37, to_date('2013-02-10', 'yyyy-mm-dd'), 'multi-state', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('36-9793769', '362221644-1', 'Mat Lam Tam', 3.62, 38, to_date('2007-04-03', 'yyyy-mm-dd'), 'Front-line', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('78-7359446', '759585748-1', 'Bamity', 18.19, 39, to_date('1989-06-30', 'yyyy-mm-dd'), 'pricing structure', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('45-7004821', '317622199-1', 'Andalax', 5.44, 40, to_date('2007-06-01', 'yyyy-mm-dd'), 'firmware', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('78-0937512', '377197422-4', 'Bitchip', 10.96, 41, to_date('2004-12-25', 'yyyy-mm-dd'), 'bi-directional', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('09-0642772', '188664515-9', 'Bitchip', 2.89, 42, to_date('2012-02-19', 'yyyy-mm-dd'), 'Multi-layered', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('70-3276364', '892092501-1', 'Lotstring', 29.91, 43, to_date('2013-04-01', 'yyyy-mm-dd'), 'paradigm', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('31-8300561', '984870970-3', 'Holdlamis', 18.35, 44, to_date('1995-01-29', 'yyyy-mm-dd'), 'algorithm', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('28-2773053', '490025101-1', 'Prodder', 2.06, 45, to_date('2007-06-25', 'yyyy-mm-dd'), 'installation', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('53-1117582', '781734687-9', 'Zathin', 29.51, 46, to_date('1999-02-06', 'yyyy-mm-dd'), 'leading edge', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('65-7026091', '001156979-4', 'Quo Lux', 25.46, 47, to_date('1993-07-10', 'yyyy-mm-dd'), 'systematic', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('81-7770678', '873254713-7', 'Fintone', 24.46, 48, to_date('2014-02-19', 'yyyy-mm-dd'), 'analyzing', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('23-0420959', '164340820-8', 'Fix San', 10.74, 49, to_date('2016-03-13', 'yyyy-mm-dd'), 'process improvement', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('74-6178630', '122044568-1', 'Stronghold', 20.46, 50, to_date('2005-06-13', 'yyyy-mm-dd'), 'Switchable', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('43-9800753', '538832647-0', 'Flexidy', 27.37, 51, to_date('2013-06-29', 'yyyy-mm-dd'), 'Organic', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('12-4992827', '661028343-5', 'Sonsing', 26.12, 52, to_date('1990-01-31', 'yyyy-mm-dd'), 'bi-directional', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('94-2441609', '271531545-7', 'Solarbreeze', 10.35, 53, to_date('1997-06-28', 'yyyy-mm-dd'), 'object-oriented', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('99-4865641', '882052650-6', 'Cardguard', 8.04, 54, to_date('1997-06-15', 'yyyy-mm-dd'), 'zero tolerance', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('45-9065957', '485311448-3', 'Bytecard', 6.58, 55, to_date('2002-09-08', 'yyyy-mm-dd'), 'well-modulated', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('34-8816328', '868337706-7', 'Konklab', 13.45, 56, to_date('1994-01-03', 'yyyy-mm-dd'), 'global', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('40-8458604', '905302149-3', 'Fix San', 26.31, 57, to_date('1988-12-13', 'yyyy-mm-dd'), 'infrastructure', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('88-5711898', '769243414-X', 'Regrant', 5.91, 58, to_date('1994-08-17', 'yyyy-mm-dd'), 'system engine', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('41-3233780', '350197304-7', 'Tin', 8.07, 59, to_date('2014-07-04', 'yyyy-mm-dd'), 'Programmable', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('48-1513905', '381841511-0', 'Mat Lam Tam', 14.9, 60, to_date('1997-10-27', 'yyyy-mm-dd'), 'Open-architected', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('69-8004737', '624282647-X', 'Fintone', 15.03, 61, to_date('1995-05-21', 'yyyy-mm-dd'), 'executive', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('00-6730628', '963090730-5', 'Home Ing', 2.17, 62, to_date('1998-02-05', 'yyyy-mm-dd'), 'strategy', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('32-4710691', '321836774-3', 'Tempsoft', 23.49, 63, to_date('1994-07-07', 'yyyy-mm-dd'), 'Graphical User Interface', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('73-8265338', '255556316-4', 'Pannier', 13.26, 10, to_date('1991-06-20', 'yyyy-mm-dd'), 'adventure', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('46-1421504', '720329589-3', 'Biodex', 9.5, 20, to_date('2009-04-30', 'yyyy-mm-dd'), 'adventure', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('97-5362702', '810417522-X', 'Tres-Zap', 6.03, 30, to_date('1999-01-25', 'yyyy-mm-dd'), 'adventure', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('76-6555137', '905235489-8', 'Alpha', 28.04, 40,to_date('2007-04-01', 'yyyy-mm-dd'), 'adventure', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('08-3281675', '557738168-1', 'Tres-Zap', 18.31, 50, to_date('2001-11-08', 'yyyy-mm-dd'), 'adventure', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('65-1698400', '621374550-5', 'Regrant', 7.96, 60, to_date('1998-04-10', 'yyyy-mm-dd'), 'adventure', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('39-9922479', '610371485-0', 'Ventosanzre', 21.19, 70, to_date('1993-07-12', 'yyyy-mm-dd'), 'adventuree', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('90-7436212', '093303497-0', 'Bitchip', 2.67, 80, to_date('2010-07-05', 'yyyy-mm-dd'), 'adventure', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('89-8454499', '632364756-7', 'Cardguardre', 10.33, 90, to_date('1996-08-01', 'yyyy-mm-dd'), 'adventure', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('51-0760472', '608230575-2', 'Konklab', 12, 100, to_date('2005-01-07', 'yyyy-mm-dd'), 'action', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('57-2611019', '800016413-2', 'Voyatouch', 17,33, to_date('2000-05-22', 'yyyy-mm-dd'), 'action', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('71-8961183', '322371254-2', 'Job', 7.3, 70, to_date('2003-01-21', 'yyyy-mm-dd'), 'action', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('82-5969295', '606398665-0', 'Veribet', 15.47, 13, to_date('2012-06-14', 'yyyy-mm-dd'), 'action', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('56-1438689', '705149134-2', 'Tresom', 10.36, 41, to_date('2002-10-08', 'yyyy-mm-dd'), 'action', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('01-5371873', '422056498-5', 'Kanlam', 18.11, 51, to_date('2005-02-25', 'yyyy-mm-dd'), 'action', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('09-5356081', '269719717-6', 'Bamity', 11.24, 61, to_date('1998-08-23', 'yyyy-mm-dd'), 'action', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('69-4680867', '356831810-5', 'Zoolab', 21.44, 71, to_date('2006-02-15', 'yyyy-mm-dd'), 'action', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('18-4023754', '557909751-4', 'Tampflex', 7.62, 91, to_date('1990-06-16', 'yyyy-mm-dd'), 'secondary', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('48-2852655', '370055606-3', 'Zathin', 12.78, 91, to_date('1991-01-22', 'yyyy-mm-dd'), 'science-fiction', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('78-7659141', '448774166-1', 'Tresom', 9.81, 20, to_date('2009-04-25', 'yyyy-mm-dd'), 'science-fiction', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('20-1683353', '995910234-3', 'Rank', 27.53, 21, to_date('2000-04-17', 'yyyy-mm-dd'), 'science-fiction', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('60-3604497', '300341959-5', 'Cardify', 24.26, 22, to_date('2000-05-03', 'yyyy-mm-dd'), 'science-fiction', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('02-2806400', '234643340-3', 'Wrapsafe', 21.16, 23, to_date('2010-05-11', 'yyyy-mm-dd'), 'science-fiction', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('23-8182019', '297105755-0', 'Zathin', 23.31, 24, to_date('1990-12-13', 'yyyy-mm-dd'), 'science-fiction', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('48-0086984', '864824803-5', 'Temp', 18.24, 25, to_date('1990-12-19', 'yyyy-mm-dd'), 'science-fiction', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('33-2481165', '381481336-7', 'Zaam-Dox', 15.58, 26, to_date('1992-04-29', 'yyyy-mm-dd'), 'drama', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('34-4869842', '424586565-2', 'Cardify', 2.14, 27, to_date('2006-10-31', 'yyyy-mm-dd'), 'drama', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('93-9646714', '363960030-4', 'Lotlux',  20.05, 28, to_date('1990-07-18', 'yyyy-mm-dd'), 'drama', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('36-2571856', '319391434-7', 'Bamity',  3.82, 29, to_date('2006-09-18', 'yyyy-mm-dd'), 'drama', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('31-7497843', '589241912-6', 'Tres-Zap', 14.28, 30, to_date('2007-03-16', 'yyyy-mm-dd'), 'drama', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('46-5793201', '887123919-9', 'Bigtax',  15.82, 31, to_date('1994-05-10', 'yyyy-mm-dd'), 'drama', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('14-0985497', '663191551-1', 'Keylex',  29.88, 32, to_date('2002-02-01', 'yyyy-mm-dd'), 'drama', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('92-2988013', '966514095-7', 'Mat Lam', 5.21, 33, to_date('1997-06-22', 'yyyy-mm-dd'), 'drama', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('39-3358245', '485438860-9', 'Matsoft', 20.91, 34, to_date('1994-06-26', 'yyyy-mm-dd'), 'drama', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('48-7669569', '101767690-9', 'It', 7.22, 35, to_date('2011-12-26', 'yyyy-mm-dd'), 'drama', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('67-4391442', '113895041-6', 'Otcom', 8, 36, to_date('2005-10-20', 'yyyy-mm-dd'), 'drama', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('81-6585139', '353963437-1', 'Konklab', 29.57, 37, to_date('2013-02-10', 'yyyy-mm-dd'), 'drama', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('36-9793769', '362221644-1', 'Mat Lam', 3.62, 38, to_date('2007-04-03', 'yyyy-mm-dd'), 'drama', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('78-7359446', '759585748-1', 'Bamity', 18.19, 39, to_date('1989-06-30', 'yyyy-mm-dd'), 'drama', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('45-7004821', '317622199-1', 'Andalax', 5.44, 40, to_date('2007-06-01', 'yyyy-mm-dd'), 'children', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('78-0937512', '377197422-4', 'Bitchip', 10.96, 41, to_date('2004-12-25', 'yyyy-mm-dd'), 'children', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('09-0642772', '188664515-9', 'Bitchip', 2.89, 42, to_date('2012-02-19', 'yyyy-mm-dd'), 'children', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('70-3276364', '892092501-1', 'Lotstringn', 29.91, 43, to_date('2013-04-01', 'yyyy-mm-dd'), 'children', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('31-8300561', '984870970-3', 'Holdlamisn', 18.35, 44, to_date('1995-01-29', 'yyyy-mm-dd'), 'children', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('28-2773053', '490025101-1', 'Prodder', 2.06, 45, to_date('2007-06-25', 'yyyy-mm-dd'), 'children', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('53-1117582', '781734687-9', 'Zathin', 29.51, 46, to_date('1999-02-06', 'yyyy-mm-dd'), 'children', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('65-7026091', '001156979-4', 'Quo Lux', 25.46, 47, to_date('1993-07-10', 'yyyy-mm-dd'), 'children', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('81-7770678', '873254713-7', 'Fintone', 24.46, 48, to_date('2014-02-19', 'yyyy-mm-dd'), 'children', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('23-0420959', '164340820-8', 'Fix San', 10.74, 49, to_date('2016-03-13', 'yyyy-mm-dd'), 'children', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('74-6178630', '122044568-1', 'Stronghol', 20.46, 50, to_date('2005-06-13', 'yyyy-mm-dd'), 'children', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('43-9800753', '538832647-0', 'Flexidy', 27.37, 51, to_date('2013-06-29', 'yyyy-mm-dd'), 'horror', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('12-4992827', '661028343-5', 'Sonsing', 26.12, 52, to_date('1990-01-31', 'yyyy-mm-dd'), 'horror', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('94-2441609', '271531545-7', 'Solarbree', 10.35, 53, to_date('1997-06-28', 'yyyy-mm-dd'), 'horror', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('99-4865641', '882052650-6', 'Cardguard', 8.04, 54, to_date('1997-06-15', 'yyyy-mm-dd'), 'horror', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('45-9065957', '485311448-3', 'Bytecard', 6.58, 55, to_date('2002-09-08', 'yyyy-mm-dd'), 'horror', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('34-8816328', '868337706-7', 'Konklab', 13.45, 56, to_date('1994-01-03', 'yyyy-mm-dd'), 'horror', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('40-8458604', '905302149-3', 'Fix San', 26.31, 57, to_date('1988-12-13', 'yyyy-mm-dd'), 'horror', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('88-5711898', '769243414-X', 'Regrant', 5.91, 58, to_date('1994-08-17', 'yyyy-mm-dd'), 'horror', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('41-3233780', '350197304-7', 'Tin', 8.07, 59, to_date('2014-07-04', 'yyyy-mm-dd'), 'horror', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('48-1513905', '381841511-0', 'Mat Lam', 14.9, 60, to_date('1997-10-27', 'yyyy-mm-dd'), 'romance', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('69-8004737', '624282647-X', 'Fintone', 15.03, 61, to_date('1995-05-21', 'yyyy-mm-dd'), 'romance', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('00-6730628', '963090730-5', 'Home Ing', 2.17, 62, to_date('1998-02-05', 'yyyy-mm-dd'), 'romance', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('32-4710691', '321836774-3', 'Tempsoft', 23.49, 63, to_date('1994-07-07', 'yyyy-mm-dd'), 'romance', 1, '03-1059950');
 insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('19-7302803', '766374698-8', 'Y-find', 2.79, 64, to_date('1996-10-28', 'yyyy-mm-dd'), 'heuristic', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('30-5951474', '642961555-3', 'Matsoft', 17.92, 65, to_date('2008-04-28', 'yyyy-mm-dd'), 'bandwidth-monitored', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('46-9440896', '226270990-4', 'Zoolab', 21.11, 66, to_date('2003-03-20', 'yyyy-mm-dd'), 'encoding', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('49-1881582', '163270995-3', 'Overhold', 3.77, 67, to_date('1998-11-07', 'yyyy-mm-dd'), 'archive', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('58-4543126', '145043037-6', 'Temp', 24.31, 68, to_date('2014-11-04', 'yyyy-mm-dd'), 'Extended', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('23-0293506', '397294268-0', 'Daltfresh', 29.86, 69, to_date('2016-09-03', 'yyyy-mm-dd'), 'artificial intelligence', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('14-4885567', '850127849-1', 'Tampflex', 21.65, 70, to_date('1993-07-13', 'yyyy-mm-dd'), 'benchmark', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('77-1195753', '144865270-7', 'Hatity', 19.44, 71, to_date('1998-08-31', 'yyyy-mm-dd'), 'Future-proofed', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('52-2565396', '179704708-6', 'Tampflex', 6.82, 72, to_date('1999-10-15', 'yyyy-mm-dd'), 'systematic', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('98-1394640', '720776691-2', 'Sonair', 24.36, 73, to_date('1988-10-30', 'yyyy-mm-dd'), '6th generation', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('20-2559365', '647512139-8', 'Alpha', 3.83, 74, to_date('1999-05-03', 'yyyy-mm-dd'), 'stable', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('46-4644709', '045324850-0', 'Andalax', 16.38, 75, to_date('1988-06-11', 'yyyy-mm-dd'), 'system-worthy', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('09-1412594', '850280528-2', 'Job', 23.44, 76, to_date('2012-04-15', 'yyyy-mm-dd'), 'adapter', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('17-6192947', '150430630-9', 'Ronstring', 8.67, 77, to_date('1993-07-31', 'yyyy-mm-dd'), 'open system', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('76-3440021', '915407661-7', 'Y-Solowarm', 7.36, 78, to_date('2002-06-03', 'yyyy-mm-dd'), 'Innovative', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('99-3455230', '569560655-1', 'Kanlam', 28.98, 79, to_date('2013-08-20', 'yyyy-mm-dd'), 'client-driven', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('65-6556289', '393110165-7', 'Cardguard', 10.61, 80, to_date('2003-08-29', 'yyyy-mm-dd'), 'Cloned', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('25-3195313', '823778037-X', 'Bamity', 9.19, 81, to_date('1990-12-07', 'yyyy-mm-dd'), 'Secured', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('76-1660238', '693795651-7', 'Latlux', 15.51, 82, to_date('2000-04-23', 'yyyy-mm-dd'), 'Progressive', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('55-1298958', '062443627-6', 'Namfix', 4.0, 83, to_date('2005-09-10', 'yyyy-mm-dd'), 'ability', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('16-9570895', '169750716-6', 'Stim', 17.39, 84, to_date('1989-09-06', 'yyyy-mm-dd'), 'capacity', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('16-5249908', '591011844-7', 'Greenlam', 22.83, 85, to_date('2006-06-05', 'yyyy-mm-dd'), 'foreground', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('44-3260728', '244841053-4', 'Redhold', 11.07, 86, to_date('1995-03-12', 'yyyy-mm-dd'), 'groupware', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('22-8474368', '813407537-1', 'Flowdesk', 2.62, 87, to_date('2015-06-21', 'yyyy-mm-dd'), 'Operative', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('79-0455326', '472085166-5', 'Stronghold', 5.36, 88, to_date('1993-10-01', 'yyyy-mm-dd'), 'next generation', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('59-6630546', '002287424-0', 'Opela', 21.45, 89, to_date('1991-03-02', 'yyyy-mm-dd'), 'intangible', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('78-1672860', '907291914-9', 'Kanlam', 17.58, 90, to_date('2016-08-02', 'yyyy-mm-dd'), 'synergy', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('81-4747135', '807506521-2', 'Stringtough', 16.57, 91, to_date('2012-02-25', 'yyyy-mm-dd'), 'system engine', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('25-4938632', '592254959-6', 'Ronstring', 6.7, 92, to_date('1989-07-15', 'yyyy-mm-dd'), 'task-force', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('85-6193743', '903966496-X', 'Alpha', 14.99, 93, to_date('2008-07-26', 'yyyy-mm-dd'), 'hierarchy', 0, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('96-5316551', '959692755-8', 'Home Ing', 27.29, 94, to_date('2014-03-18', 'yyyy-mm-dd'), 'focus group', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('36-5985588', '926127084-0', 'Stringtough', 6.66, 95, to_date('2010-07-12', 'yyyy-mm-dd'), 'background', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('54-3696177', '219002684-9', 'Viva', 10.79, 96, to_date('2009-01-02', 'yyyy-mm-dd'), 'paradigm', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('67-5690009', '803715034-8', 'Konklab', 29.36, 97, to_date('2001-02-20', 'yyyy-mm-dd'), 'internet solution', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('81-0480350', '146585097-X', 'Daltfresh', 15.95, 98, to_date('2012-06-22', 'yyyy-mm-dd'), 'reciprocal', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('84-0569091', '344461435-7', 'Home Ing', 29.9, 99, to_date('2015-08-20', 'yyyy-mm-dd'), 'toolset', 1, '03-1059950');
-insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('87-1179985', '735578602-4', 'Quo Lux', 25.22, 100, to_date('1998-09-09', 'yyyy-mm-dd'), 'Customizable', 0, '03-1059950');
-
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('30-5951474', '642961555-3', 'Matsoft', 17.92, 65, to_date('2008-04-28', 'yyyy-mm-dd'), 'romance', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('46-9440896', '226270990-4', 'Zoolab', 21.11, 66, to_date('2003-03-20', 'yyyy-mm-dd'), 'romance', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('49-1881582', '163270995-3', 'Overhold', 3.77, 67, to_date('1998-11-07', 'yyyy-mm-dd'), 'romance', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('58-4543126', '145043037-6', 'Temp', 24.31, 68, to_date('2014-11-04', 'yyyy-mm-dd'), 'romance', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('23-0293506', '397294268-0', 'Daltfreshr', 29.86, 69, to_date('2016-09-03', 'yyyy-mm-dd'), 'romance', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('14-4885567', '850127849-1', 'Tampflex', 21.65, 70, to_date('1993-07-13', 'yyyy-mm-dd'), 'thriller', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('77-1195753', '144865270-7', 'Hatity', 19.44, 71, to_date('1998-08-31', 'yyyy-mm-dd'), 'thriller', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('52-2565396', '179704708-6', 'Tampflex', 6.82, 72, to_date('1999-10-15', 'yyyy-mm-dd'), 'thriller', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('98-1394640', '720776691-2', 'Sonair', 24.36, 73, to_date('1988-10-30', 'yyyy-mm-dd'), 'thriller', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('20-2559365', '647512139-8', 'Alpha', 3.83, 74, to_date('1999-05-03', 'yyyy-mm-dd'), 'thriller', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('46-4644709', '045324850-0', 'Andalax',16.38, 75, to_date('1988-06-11', 'yyyy-mm-dd'), 'thriller', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('09-1412594', '850280528-2', 'Job', 23.45, 76, to_date('2012-04-15', 'yyyy-mm-dd'), 'thriller', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('17-6192947', '150430630-9', 'Ronstringr', 8.67, 77, to_date('1993-07-31', 'yyyy-mm-dd'), 'thriller', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('76-3440021', '915407661-7', 'Y-Solowarr', 7.36, 78, to_date('2002-06-03', 'yyyy-mm-dd'), 'thriller', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('99-3455230', '569560655-1', 'Kanlam', 28.98, 79, to_date('2013-08-20', 'yyyy-mm-dd'), 'thriller', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('65-6556289', '393110165-7', 'Cardguardr', 10.61, 80, to_date('2003-08-29', 'yyyy-mm-dd'), 'thriller', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('25-3195313', '823778037-X', 'Bamity', 9.19, 81, to_date('1990-12-07', 'yyyy-mm-dd'), 'thriller', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('76-1660238', '693795651-7', 'Latlux', 15.51, 82, to_date('2000-04-23', 'yyyy-mm-dd'), 'thriller', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('55-1298958', '062443627-6', 'Namfix', 4.0, 83, to_date('2005-09-10', 'yyyy-mm-dd'), 'thriller', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('16-9570895', '169750716-6', 'Stim', 17.39, 84, to_date('1989-09-06', 'yyyy-mm-dd'), 'documentary', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('16-5249908', '591011844-7', 'Greenlam', 22.83, 85, to_date('2006-06-05', 'yyyy-mm-dd'), 'documentary', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('44-3260728', '244841053-4', 'Redhold', 11.07, 86, to_date('1995-03-12', 'yyyy-mm-dd'), 'documentary', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('22-8474368', '813407537-1', 'Flowdesk', 2.62, 87, to_date('2015-06-21', 'yyyy-mm-dd'), 'documentary', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('79-0455326', '472085166-5', 'Stronghol', 5.36, 88, to_date('1993-10-01', 'yyyy-mm-dd'), 'documentary', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('59-6630546', '002287424-0', 'Opela', 21.45, 89, to_date('1991-03-02', 'yyyy-mm-dd'), 'documentary', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('78-1672860', '907291914-9', 'Kanlam', 17.58, 90, to_date('2016-08-02', 'yyyy-mm-dd'), 'documentary', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('81-4747135', '807506521-2', 'Stringtout', 16.57, 91, to_date('2012-02-25', 'yyyy-mm-dd'), 'documentary', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('25-4938632', '592254959-6', 'Ronstring', 6.7, 92, to_date('1989-07-15', 'yyyy-mm-dd'), 'documentary', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('85-6193743', '903966496-X', 'Alpha', 14.99, 93, to_date('2008-07-26', 'yyyy-mm-dd'), 'documentary', 0, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('96-5316551', '959692755-8', 'Home Ing', 27.29, 94, to_date('2014-03-18', 'yyyy-mm-dd'), 'documentary', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('36-5985588', '926127084-0', 'Stringtoutary', 6.66, 95, to_date('2010-07-12', 'yyyy-mm-dd'), 'documentary', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('54-3696177', '219002684-9', 'Viva', 10, 96, to_date('2009-01-02', 'yyyy-mm-dd'), 'action', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('67-5690009', '803715034-8', 'Konklab', 29.36, 97, to_date('2001-02-20', 'yyyy-mm-dd'), 'action', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('81-0480350', '146585097-X', 'Daltfresh', 15.95, 98, to_date('2012-06-22', 'yyyy-mm-dd'), 'action', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('84-0569091', '344461435-7', 'Home Ing', 29.9, 99, to_date('2015-08-20', 'yyyy-mm-dd'), 'action', 1, '03-1059950');
+insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('87-1179985', '735578602-4', 'Quo Lux', 25.22, 100, to_date('1998-09-09', 'yyyy-mm-dd'), 'action', 0, '03-1059950');
 
 
 --employees
@@ -678,17 +849,106 @@ insert into actors (actorid, first_name, last_name) values ('07-2483388', 'Randy
 insert into actors (actorid, first_name, last_name) values ('30-2447763', 'Ruby', 'Sanchez');
 
 --movie actors
-insert into movieactors(actorid, movieid) values ('88-5697278', '18-4023754');
-insert into movieactors(actorid, movieid) values ('65-4070520', '48-0086984');
-insert into movieactors(actorid, movieid) values ('85-9687546', '93-9646714');
-insert into movieactors(actorid, movieid) values ('34-9304923', '92-2988013');
-insert into movieactors(actorid, movieid) values ('39-1850089', '39-3358245');
-insert into movieactors(actorid, movieid) values ('36-3921693', '48-7669569');
-insert into movieactors(actorid, movieid) values ('55-3993946', '67-4391442');
-insert into movieactors(actorid, movieid) values ('55-3993946', '81-6585139');
-insert into movieactors(actorid, movieid) values ('36-3921693', '36-9793769');
-insert into movieactors(actorid, movieid) values ('39-1850089', '78-7359446');
-insert into movieactors(actorid, movieid) values ('85-9687546', '45-7004821');
+insert into movieactors (actorid, movieid) values ('60-1955047', '73-8265338');
+insert into movieactors (actorid, movieid) values ('06-9357192', '46-1421504');
+insert into movieactors (actorid, movieid) values ('39-9651342', '97-5362702');
+insert into movieactors (actorid, movieid) values ('63-2846037', '76-6555137');
+insert into movieactors (actorid, movieid) values ('53-4283011', '08-3281675');
+insert into movieactors (actorid, movieid) values ('76-8127180', '65-1698400');
+insert into movieactors (actorid, movieid) values ('65-4070520', '39-9922479');
+insert into movieactors (actorid, movieid) values ('85-9687546', '90-7436212');
+insert into movieactors (actorid, movieid) values ('34-9304923', '89-8454499');
+insert into movieactors (actorid, movieid) values ('90-7777042', '51-0760472');
+insert into movieactors (actorid, movieid) values ('39-1850089', '57-2611019');
+insert into movieactors (actorid, movieid) values ('53-7454892', '71-8961183');
+insert into movieactors (actorid, movieid) values ('36-3921693', '82-5969295');
+insert into movieactors (actorid, movieid) values ('03-3030021', '56-1438689');
+insert into movieactors (actorid, movieid) values ('99-6803668', '01-5371873');
+insert into movieactors (actorid, movieid) values ('81-2673545', '09-5356081');
+insert into movieactors (actorid, movieid) values ('07-7978407', '69-4680867');
+insert into movieactors (actorid, movieid) values ('63-9738818', '18-4023754');
+insert into movieactors (actorid, movieid) values ('16-0680939', '48-2852655');
+insert into movieactors (actorid, movieid) values ('48-4018681', '78-7659141');
+insert into movieactors (actorid, movieid) values ('55-3993946', '20-1683353');
+insert into movieactors (actorid, movieid) values ('37-0827296', '60-3604497');
+insert into movieactors (actorid, movieid) values ('60-0300796', '02-2806400');
+insert into movieactors (actorid, movieid) values ('49-5936395', '23-8182019');
+insert into movieactors (actorid, movieid) values ('85-5102149', '48-0086984');
+insert into movieactors (actorid, movieid) values ('19-7469409', '33-2481165');
+insert into movieactors (actorid, movieid) values ('03-2059515', '34-4869842');
+insert into movieactors (actorid, movieid) values ('17-2840227', '93-9646714');
+insert into movieactors (actorid, movieid) values ('17-1106101', '36-2571856');
+insert into movieactors (actorid, movieid) values ('14-3106568', '31-7497843');
+insert into movieactors (actorid, movieid) values ('48-9002954', '46-5793201');
+insert into movieactors (actorid, movieid) values ('65-1773695', '14-0985497');
+insert into movieactors (actorid, movieid) values ('40-1161197', '92-2988013');
+insert into movieactors (actorid, movieid) values ('27-2160889', '39-3358245');
+insert into movieactors (actorid, movieid) values ('31-9784973', '48-7669569');
+insert into movieactors (actorid, movieid) values ('33-7040519', '67-4391442');
+insert into movieactors (actorid, movieid) values ('62-8454644', '81-6585139');
+insert into movieactors (actorid, movieid) values ('07-2483388', '36-9793769');
+insert into movieactors (actorid, movieid) values ('30-2447763', '78-7359446');
+insert into movieactors (actorid, movieid) values ('60-1955047', '45-7004821');
+insert into movieactors (actorid, movieid) values ('06-9357192', '78-0937512');
+insert into movieactors (actorid, movieid) values ('39-9651342', '09-0642772');
+insert into movieactors (actorid, movieid) values ('63-2846037', '70-3276364');
+insert into movieactors (actorid, movieid) values ('53-4283011', '31-8300561');
+insert into movieactors (actorid, movieid) values ('76-8127180', '28-2773053');
+insert into movieactors (actorid, movieid) values ('65-4070520', '53-1117582');
+insert into movieactors (actorid, movieid) values ('85-9687546', '65-7026091');
+insert into movieactors (actorid, movieid) values ('34-9304923', '81-7770678');
+insert into movieactors (actorid, movieid) values ('90-7777042', '23-0420959');
+insert into movieactors (actorid, movieid) values ('39-1850089', '74-6178630');
+insert into movieactors (actorid, movieid) values ('53-7454892', '43-9800753');
+insert into movieactors (actorid, movieid) values ('36-3921693', '12-4992827');
+insert into movieactors (actorid, movieid) values ('03-3030021', '94-2441609');
+insert into movieactors (actorid, movieid) values ('99-6803668', '99-4865641');
+insert into movieactors (actorid, movieid) values ('81-2673545', '45-9065957');
+insert into movieactors (actorid, movieid) values ('07-7978407', '34-8816328');
+insert into movieactors (actorid, movieid) values ('63-9738818', '40-8458604');
+insert into movieactors (actorid, movieid) values ('16-0680939', '88-5711898');
+insert into movieactors (actorid, movieid) values ('48-4018681', '41-3233780');
+insert into movieactors (actorid, movieid) values ('55-3993946', '48-1513905');
+insert into movieactors (actorid, movieid) values ('37-0827296', '69-8004737');
+insert into movieactors (actorid, movieid) values ('60-0300796', '00-6730628');
+insert into movieactors (actorid, movieid) values ('49-5936395', '32-4710691');
+insert into movieactors (actorid, movieid) values ('85-5102149', '19-7302803');
+insert into movieactors (actorid, movieid) values ('19-7469409', '30-5951474');
+insert into movieactors (actorid, movieid) values ('03-2059515', '46-9440896');
+insert into movieactors (actorid, movieid) values ('17-2840227', '49-1881582');
+insert into movieactors (actorid, movieid) values ('17-1106101', '58-4543126');
+insert into movieactors (actorid, movieid) values ('14-3106568', '23-0293506');
+insert into movieactors (actorid, movieid) values ('48-9002954', '14-4885567');
+insert into movieactors (actorid, movieid) values ('65-1773695', '77-1195753');
+insert into movieactors (actorid, movieid) values ('40-1161197', '52-2565396');
+insert into movieactors (actorid, movieid) values ('27-2160889', '98-1394640');
+insert into movieactors (actorid, movieid) values ('31-9784973', '20-2559365');
+insert into movieactors (actorid, movieid) values ('33-7040519', '46-4644709');
+insert into movieactors (actorid, movieid) values ('62-8454644', '09-1412594');
+insert into movieactors (actorid, movieid) values ('07-2483388', '17-6192947');
+insert into movieactors (actorid, movieid) values ('30-2447763', '76-3440021');
+insert into movieactors (actorid, movieid) values ('60-1955047', '99-3455230');
+insert into movieactors (actorid, movieid) values ('06-9357192', '65-6556289');
+insert into movieactors (actorid, movieid) values ('39-9651342', '25-3195313');
+insert into movieactors (actorid, movieid) values ('63-2846037', '76-1660238');
+insert into movieactors (actorid, movieid) values ('53-4283011', '55-1298958');
+insert into movieactors (actorid, movieid) values ('76-8127180', '16-9570895');
+insert into movieactors (actorid, movieid) values ('65-4070520', '16-5249908');
+insert into movieactors (actorid, movieid) values ('85-9687546', '44-3260728');
+insert into movieactors (actorid, movieid) values ('34-9304923', '22-8474368');
+insert into movieactors (actorid, movieid) values ('90-7777042', '79-0455326');
+insert into movieactors (actorid, movieid) values ('39-1850089', '59-6630546');
+insert into movieactors (actorid, movieid) values ('53-7454892', '78-1672860');
+insert into movieactors (actorid, movieid) values ('36-3921693', '81-4747135');
+insert into movieactors (actorid, movieid) values ('03-3030021', '25-4938632');
+insert into movieactors (actorid, movieid) values ('99-6803668', '85-6193743');
+insert into movieactors (actorid, movieid) values ('81-2673545', '96-5316551');
+insert into movieactors (actorid, movieid) values ('07-7978407', '36-5985588');
+insert into movieactors (actorid, movieid) values ('63-9738818', '54-3696177');
+insert into movieactors (actorid, movieid) values ('16-0680939', '67-5690009');
+insert into movieactors (actorid, movieid) values ('48-4018681', '81-0480350');
+insert into movieactors (actorid, movieid) values ('55-3993946', '84-0569091');
+insert into movieactors (actorid, movieid) values ('37-0827296', '87-1179985');
 
 --shipments
 insert into shipments(shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity)
@@ -699,4 +959,7 @@ insert into shipments(shipmentid, movieid, ship_date, ship_street, ship_country,
 				values(0003, '97-5362702', to_date('2016-05-05', 'yyyy-mm-dd'), 'this is where the store is', 'canada','05-8597812', 100 );
 
 				
+
+
+
 
