@@ -794,172 +794,27 @@ insert into employees (employeeid, managerid, address, first_name, last_name, ph
 insert into employees (employeeid, managerid, address, first_name, last_name, phone_number, title, salary, hire_date) values ('78-4412455', '02-7757423', '2942 Northland Court', 'Randy', 'Long', '03-1059950', 'migration', 1806, to_date('2013-12-07', 'yyyy-mm-dd'));
 
 --rentals
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('126856643-8', '522237612-5', '94-9771106', '73-8265338', 'Stephen', to_date('2007-09-20', 'yyyy-mm-dd'), to_date('2013-01-29', 'yyyy-mm-dd'), 36, '03-1059950', 0, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('701339923-X', '522237612-5', '94-9771106', '73-8265338', 'Louis', to_date('2007-01-27', 'yyyy-mm-dd'), to_date('2010-11-02', 'yyyy-mm-dd'), 20, '03-1059950', 0, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('263131225-2', '522237612-5', '94-9771106', '73-8265338', 'Jennifer', to_date('2014-02-02', 'yyyy-mm-dd'), to_date('2015-06-14', 'yyyy-mm-dd'), 19, '03-1059950', 0, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('115115634-5', '522237612-5', '94-9771106', '73-8265338', 'Jesse', to_date('2013-07-17', 'yyyy-mm-dd'), to_date('2005-04-19', 'yyyy-mm-dd'), 34, '03-1059950', 0, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('035945460-7', '522237612-5', '94-9771106', '73-8265338', 'Lisa', to_date('2014-10-13', 'yyyy-mm-dd'), to_date('2012-12-22', 'yyyy-mm-dd'), 11, '03-1059950', 1, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('126856643-8', '522237612-5', '48-2852655', '370055606-3', 'Stephen', to_date('2007-09-20', 'yyyy-mm-dd'), to_date('2013-01-29', 'yyyy-mm-dd'), 36, '03-1059950', 0, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('701339923-X', '522237612-5', '78-7659141', '448774166-1', 'Louis', to_date('2007-01-27', 'yyyy-mm-dd'), to_date('2010-11-02', 'yyyy-mm-dd'), 20, '03-1059950', 0, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('263131225-2', '522237612-5', '20-1683353', '995910234-3', 'Jennifer', to_date('2014-02-02', 'yyyy-mm-dd'), to_date('2015-06-14', 'yyyy-mm-dd'), 19, '03-1059950', 0, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('115115634-5', '522237612-5', '60-3604497', '300341959-5', 'Jesse', to_date('2013-07-17', 'yyyy-mm-dd'), to_date('2005-04-19', 'yyyy-mm-dd'), 34, '03-1059950', 0, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('035945460-7', '522237612-5', '02-2806400', '234643340-3', 'Lisa', to_date('2014-10-13', 'yyyy-mm-dd'), to_date('2012-12-22', 'yyyy-mm-dd'), 11, '03-1059950', 1, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('081519397-1', '211746369-X', '23-8182019', '297105755-0', 'Craig', to_date('2016-05-05', 'yyyy-mm-dd'), to_date('2008-08-27', 'yyyy-mm-dd'), 31, '03-1059950', 1, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('413215315-0', '211746369-X', '48-0086984', '864824803-5', 'Harold', to_date('2015-06-16', 'yyyy-mm-dd'), to_date('2005-06-03', 'yyyy-mm-dd'), 26, '03-1059950', 0, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('025430356-0', '211746369-X', '33-2481165', '381481336-7', 'Benjamin', to_date('2014-10-07', 'yyyy-mm-dd'), to_date('2009-12-22', 'yyyy-mm-dd'), 28, '03-1059950', 1, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('772699742-7', '211746369-X', '34-4869842', '424586565-2', 'Jacqueline', to_date('2009-10-27', 'yyyy-mm-dd'), to_date('2010-01-15', 'yyyy-mm-dd'), 7, '03-1059950', 0, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('335867002-3', '211746369-X', '93-9646714', '363960030-4', 'Jacqueline', to_date('2009-11-14', 'yyyy-mm-dd'), to_date('2015-06-03', 'yyyy-mm-dd'), 35, '03-1059950', 0, 0);
 
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('081519397-1', '211746369-X', '05-8597812', '89-8454499', 'Craig', to_date('2016-05-05', 'yyyy-mm-dd'), to_date('2008-08-27', 'yyyy-mm-dd'), 31, '03-1059950', 1, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('413215315-0', '211746369-X', '05-8597812', '89-8454499', 'Harold', to_date('2015-06-16', 'yyyy-mm-dd'), to_date('2005-06-03', 'yyyy-mm-dd'), 26, '03-1059950', 0, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('025430356-0', '211746369-X', '05-8597812', '89-8454499', 'Benjamin', to_date('2014-10-07', 'yyyy-mm-dd'), to_date('2009-12-22', 'yyyy-mm-dd'), 28, '03-1059950', 1, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('772699742-7', '211746369-X', '05-8597812', '89-8454499', 'Jacqueline', to_date('2009-10-27', 'yyyy-mm-dd'), to_date('2010-01-15', 'yyyy-mm-dd'), 7, '03-1059950', 0, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('335867002-3', '211746369-X', '05-8597812', '89-8454499', 'Jacqueline', to_date('2009-11-14', 'yyyy-mm-dd'), to_date('2015-06-03', 'yyyy-mm-dd'), 35, '03-1059950', 0, 0);
-
---actors
-insert into actors (actorid, first_name, last_name) values ('88-5697278', 'Adam', 'Burke');
-insert into actors (actorid, first_name, last_name) values ('60-1955047', 'George', 'Frazier');
-insert into actors (actorid, first_name, last_name) values ('06-9357192', 'Martin', 'Turner');
-insert into actors (actorid, first_name, last_name) values ('39-9651342', 'Adam', 'Martinez');
-insert into actors (actorid, first_name, last_name) values ('63-2846037', 'Anna', 'Richards');
-insert into actors (actorid, first_name, last_name) values ('53-4283011', 'Sharon', 'Sullivan');
-insert into actors (actorid, first_name, last_name) values ('76-8127180', 'Emily', 'Walker');
-insert into actors (actorid, first_name, last_name) values ('65-4070520', 'Lawrence', 'Johnson');
-insert into actors (actorid, first_name, last_name) values ('85-9687546', 'Patricia', 'Jenkins');
-insert into actors (actorid, first_name, last_name) values ('34-9304923', 'Nancy', 'Morris');
-insert into actors (actorid, first_name, last_name) values ('90-7777042', 'Anna', 'Sullivan');
-insert into actors (actorid, first_name, last_name) values ('39-1850089', 'Howard', 'Perry');
-insert into actors (actorid, first_name, last_name) values ('53-7454892', 'Phyllis', 'Kennedy');
-insert into actors (actorid, first_name, last_name) values ('36-3921693', 'Mary', 'Gibson');
-insert into actors (actorid, first_name, last_name) values ('03-3030021', 'Jane', 'Meyer');
-insert into actors (actorid, first_name, last_name) values ('99-6803668', 'Jeremy', 'Gilbert');
-insert into actors (actorid, first_name, last_name) values ('81-2673545', 'Harry', 'Russell');
-insert into actors (actorid, first_name, last_name) values ('07-7978407', 'Bruce', 'Rodriguez');
-insert into actors (actorid, first_name, last_name) values ('63-9738818', 'Lawrence', 'Fisher');
-insert into actors (actorid, first_name, last_name) values ('16-0680939', 'Dennis', 'Lewis');
-insert into actors (actorid, first_name, last_name) values ('48-4018681', 'Edward', 'Hamilton');
-insert into actors (actorid, first_name, last_name) values ('55-3993946', 'Aaron', 'Fuller');
-insert into actors (actorid, first_name, last_name) values ('37-0827296', 'Joyce', 'Willis');
-insert into actors (actorid, first_name, last_name) values ('60-0300796', 'Richard', 'Warren');
-insert into actors (actorid, first_name, last_name) values ('49-5936395', 'Jonathan', 'Gray');
-insert into actors (actorid, first_name, last_name) values ('85-5102149', 'Melissa', 'Pierce');
-insert into actors (actorid, first_name, last_name) values ('19-7469409', 'Harry', 'Little');
-insert into actors (actorid, first_name, last_name) values ('03-2059515', 'Virginia', 'Carroll');
-insert into actors (actorid, first_name, last_name) values ('17-2840227', 'Ashley', 'Simpson');
-insert into actors (actorid, first_name, last_name) values ('17-1106101', 'Alice', 'Nichols');
-insert into actors (actorid, first_name, last_name) values ('14-3106568', 'Shawn', 'Brown');
-insert into actors (actorid, first_name, last_name) values ('48-9002954', 'Henry', 'Henderson');
-insert into actors (actorid, first_name, last_name) values ('65-1773695', 'Donna', 'Spencer');
-insert into actors (actorid, first_name, last_name) values ('40-1161197', 'James', 'Shaw');
-insert into actors (actorid, first_name, last_name) values ('27-2160889', 'Jeffrey', 'Thomas');
-insert into actors (actorid, first_name, last_name) values ('31-9784973', 'Martin', 'Welch');
-insert into actors (actorid, first_name, last_name) values ('33-7040519', 'Justin', 'Vasquez');
-insert into actors (actorid, first_name, last_name) values ('62-8454644', 'Elizabeth', 'Daniels');
-insert into actors (actorid, first_name, last_name) values ('07-2483388', 'Randy', 'Lawson');
-insert into actors (actorid, first_name, last_name) values ('30-2447763', 'Ruby', 'Sanchez');
-
---movie actors
-insert into movieactors (actorid, movieid) values ('60-1955047', '73-8265338');
-insert into movieactors (actorid, movieid) values ('06-9357192', '46-1421504');
-insert into movieactors (actorid, movieid) values ('39-9651342', '97-5362702');
-insert into movieactors (actorid, movieid) values ('63-2846037', '76-6555137');
-insert into movieactors (actorid, movieid) values ('53-4283011', '08-3281675');
-insert into movieactors (actorid, movieid) values ('76-8127180', '65-1698400');
-insert into movieactors (actorid, movieid) values ('65-4070520', '39-9922479');
-insert into movieactors (actorid, movieid) values ('85-9687546', '90-7436212');
-insert into movieactors (actorid, movieid) values ('34-9304923', '89-8454499');
-insert into movieactors (actorid, movieid) values ('90-7777042', '51-0760472');
-insert into movieactors (actorid, movieid) values ('39-1850089', '57-2611019');
-insert into movieactors (actorid, movieid) values ('53-7454892', '71-8961183');
-insert into movieactors (actorid, movieid) values ('36-3921693', '82-5969295');
-insert into movieactors (actorid, movieid) values ('03-3030021', '56-1438689');
-insert into movieactors (actorid, movieid) values ('99-6803668', '01-5371873');
-insert into movieactors (actorid, movieid) values ('81-2673545', '09-5356081');
-insert into movieactors (actorid, movieid) values ('07-7978407', '69-4680867');
-insert into movieactors (actorid, movieid) values ('63-9738818', '18-4023754');
-insert into movieactors (actorid, movieid) values ('16-0680939', '48-2852655');
-insert into movieactors (actorid, movieid) values ('48-4018681', '78-7659141');
-insert into movieactors (actorid, movieid) values ('55-3993946', '20-1683353');
-insert into movieactors (actorid, movieid) values ('37-0827296', '60-3604497');
-insert into movieactors (actorid, movieid) values ('60-0300796', '02-2806400');
-insert into movieactors (actorid, movieid) values ('49-5936395', '23-8182019');
-insert into movieactors (actorid, movieid) values ('85-5102149', '48-0086984');
-insert into movieactors (actorid, movieid) values ('19-7469409', '33-2481165');
-insert into movieactors (actorid, movieid) values ('03-2059515', '34-4869842');
-insert into movieactors (actorid, movieid) values ('17-2840227', '93-9646714');
-insert into movieactors (actorid, movieid) values ('17-1106101', '36-2571856');
-insert into movieactors (actorid, movieid) values ('14-3106568', '31-7497843');
-insert into movieactors (actorid, movieid) values ('48-9002954', '46-5793201');
-insert into movieactors (actorid, movieid) values ('65-1773695', '14-0985497');
-insert into movieactors (actorid, movieid) values ('40-1161197', '92-2988013');
-insert into movieactors (actorid, movieid) values ('27-2160889', '39-3358245');
-insert into movieactors (actorid, movieid) values ('31-9784973', '48-7669569');
-insert into movieactors (actorid, movieid) values ('33-7040519', '67-4391442');
-insert into movieactors (actorid, movieid) values ('62-8454644', '81-6585139');
-insert into movieactors (actorid, movieid) values ('07-2483388', '36-9793769');
-insert into movieactors (actorid, movieid) values ('30-2447763', '78-7359446');
-insert into movieactors (actorid, movieid) values ('60-1955047', '45-7004821');
-insert into movieactors (actorid, movieid) values ('06-9357192', '78-0937512');
-insert into movieactors (actorid, movieid) values ('39-9651342', '09-0642772');
-insert into movieactors (actorid, movieid) values ('63-2846037', '70-3276364');
-insert into movieactors (actorid, movieid) values ('53-4283011', '31-8300561');
-insert into movieactors (actorid, movieid) values ('76-8127180', '28-2773053');
-insert into movieactors (actorid, movieid) values ('65-4070520', '53-1117582');
-insert into movieactors (actorid, movieid) values ('85-9687546', '65-7026091');
-insert into movieactors (actorid, movieid) values ('34-9304923', '81-7770678');
-insert into movieactors (actorid, movieid) values ('90-7777042', '23-0420959');
-insert into movieactors (actorid, movieid) values ('39-1850089', '74-6178630');
-insert into movieactors (actorid, movieid) values ('53-7454892', '43-9800753');
-insert into movieactors (actorid, movieid) values ('36-3921693', '12-4992827');
-insert into movieactors (actorid, movieid) values ('03-3030021', '94-2441609');
-insert into movieactors (actorid, movieid) values ('99-6803668', '99-4865641');
-insert into movieactors (actorid, movieid) values ('81-2673545', '45-9065957');
-insert into movieactors (actorid, movieid) values ('07-7978407', '34-8816328');
-insert into movieactors (actorid, movieid) values ('63-9738818', '40-8458604');
-insert into movieactors (actorid, movieid) values ('16-0680939', '88-5711898');
-insert into movieactors (actorid, movieid) values ('48-4018681', '41-3233780');
-insert into movieactors (actorid, movieid) values ('55-3993946', '48-1513905');
-insert into movieactors (actorid, movieid) values ('37-0827296', '69-8004737');
-insert into movieactors (actorid, movieid) values ('60-0300796', '00-6730628');
-insert into movieactors (actorid, movieid) values ('49-5936395', '32-4710691');
-insert into movieactors (actorid, movieid) values ('85-5102149', '19-7302803');
-insert into movieactors (actorid, movieid) values ('19-7469409', '30-5951474');
-insert into movieactors (actorid, movieid) values ('03-2059515', '46-9440896');
-insert into movieactors (actorid, movieid) values ('17-2840227', '49-1881582');
-insert into movieactors (actorid, movieid) values ('17-1106101', '58-4543126');
-insert into movieactors (actorid, movieid) values ('14-3106568', '23-0293506');
-insert into movieactors (actorid, movieid) values ('48-9002954', '14-4885567');
-insert into movieactors (actorid, movieid) values ('65-1773695', '77-1195753');
-insert into movieactors (actorid, movieid) values ('40-1161197', '52-2565396');
-insert into movieactors (actorid, movieid) values ('27-2160889', '98-1394640');
-insert into movieactors (actorid, movieid) values ('31-9784973', '20-2559365');
-insert into movieactors (actorid, movieid) values ('33-7040519', '46-4644709');
-insert into movieactors (actorid, movieid) values ('62-8454644', '09-1412594');
-insert into movieactors (actorid, movieid) values ('07-2483388', '17-6192947');
-insert into movieactors (actorid, movieid) values ('30-2447763', '76-3440021');
-insert into movieactors (actorid, movieid) values ('60-1955047', '99-3455230');
-insert into movieactors (actorid, movieid) values ('06-9357192', '65-6556289');
-insert into movieactors (actorid, movieid) values ('39-9651342', '25-3195313');
-insert into movieactors (actorid, movieid) values ('63-2846037', '76-1660238');
-insert into movieactors (actorid, movieid) values ('53-4283011', '55-1298958');
-insert into movieactors (actorid, movieid) values ('76-8127180', '16-9570895');
-insert into movieactors (actorid, movieid) values ('65-4070520', '16-5249908');
-insert into movieactors (actorid, movieid) values ('85-9687546', '44-3260728');
-insert into movieactors (actorid, movieid) values ('34-9304923', '22-8474368');
-insert into movieactors (actorid, movieid) values ('90-7777042', '79-0455326');
-insert into movieactors (actorid, movieid) values ('39-1850089', '59-6630546');
-insert into movieactors (actorid, movieid) values ('53-7454892', '78-1672860');
-insert into movieactors (actorid, movieid) values ('36-3921693', '81-4747135');
-insert into movieactors (actorid, movieid) values ('03-3030021', '25-4938632');
-insert into movieactors (actorid, movieid) values ('99-6803668', '85-6193743');
-insert into movieactors (actorid, movieid) values ('81-2673545', '96-5316551');
-insert into movieactors (actorid, movieid) values ('07-7978407', '36-5985588');
-insert into movieactors (actorid, movieid) values ('63-9738818', '54-3696177');
-insert into movieactors (actorid, movieid) values ('16-0680939', '67-5690009');
-insert into movieactors (actorid, movieid) values ('48-4018681', '81-0480350');
-insert into movieactors (actorid, movieid) values ('55-3993946', '84-0569091');
-insert into movieactors (actorid, movieid) values ('37-0827296', '87-1179985');
-
---shipments
-insert into shipments(shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity)
-				values(0001, '73-8265338', to_date('2016-05-05', 'yyyy-mm-dd'), 'this is where the store is', 'canada','05-8597812', 100 ); 
-insert into shipments(shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity)
-				values(0002, '46-1421504', to_date('2016-05-05', 'yyyy-mm-dd'), 'this is where the store is', 'canada','05-8597812', 100 ); 
-insert into shipments(shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity)
-				values(0003, '97-5362702', to_date('2016-05-05', 'yyyy-mm-dd'), 'this is where the store is', 'canada','05-8597812', 100 );
-
-				
-
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('81-7770678', '873254713-7', '73-8265338', '255556316-4', 'Stephen', to_date('2007-09-20', 'yyyy-mm-dd'), to_date('2013-01-29', 'yyyy-mm-dd'), 36, '03-1059950', 0, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('23-0420959', '164340820-8', '46-1421504', '720329589-3', 'Louis', to_date('2007-01-27', 'yyyy-mm-dd'), to_date('2010-11-02', 'yyyy-mm-dd'), 20, '03-1059950', 0, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('74-6178630', '122044568-1', '97-5362702', '810417522-X', 'Jennifer', to_date('2014-02-02', 'yyyy-mm-dd'), to_date('2015-06-14', 'yyyy-mm-dd'), 19, '03-1059950', 0, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('43-9800753', '538832647-0', '76-6555137', '905235489-8', 'Jesse', to_date('2013-07-17', 'yyyy-mm-dd'), to_date('2005-04-19', 'yyyy-mm-dd'), 34, '03-1059950', 0, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('12-4992827', '661028343-5', '08-3281675', '557738168-1', 'Lisa', to_date('2014-10-13', 'yyyy-mm-dd'), to_date('2012-12-22', 'yyyy-mm-dd'), 11, '03-1059950', 1, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('94-2441609', '271531545-7', '65-1698400', '621374550-5', 'Craig', to_date('2016-05-05', 'yyyy-mm-dd'), to_date('2008-08-27', 'yyyy-mm-dd'), 31, '03-1059950', 1, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('99-4865641', '882052650-6', '39-9922479', '610371485-0', 'Harold', to_date('2015-06-16', 'yyyy-mm-dd'), to_date('2005-06-03', 'yyyy-mm-dd'), 26, '03-1059950', 0, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('45-9065957', '485311448-3', '90-7436212', '093303497-0', 'Benjamin', to_date('2014-10-07', 'yyyy-mm-dd'), to_date('2009-12-22', 'yyyy-mm-dd'), 28, '03-1059950', 1, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('34-8816328', '868337706-7', '89-8454499', '632364756-7', 'Jacqueline', to_date('2009-10-27', 'yyyy-mm-dd'), to_date('2010-01-15', 'yyyy-mm-dd'), 7, '03-1059950', 0, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('40-8458604', '905302149-3', '51-0760472', '608230575-2', 'Jacqueline', to_date('2009-11-14', 'yyyy-mm-dd'), to_date('2015-06-03', 'yyyy-mm-dd'), 35, '03-1059950', 0, 0);
 
 
 
