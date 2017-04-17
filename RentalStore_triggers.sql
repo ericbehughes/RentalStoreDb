@@ -111,3 +111,16 @@ BEGIN
     ROLLBACK;
   end if;    
 end;
+
+
+--trigger for updating inventory if new shipment comes in
+CREATE OR REPLACE TRIGGER AFTER_SHIPMENTS_INSERTORUPDATE
+ AFTER INSERT OR UPDATE
+ ON SHIPMENTS
+ FOR EACH ROW
+BEGIN
+
+	INSERT INTO Inventory VALUES (:new.shipmentID, :new.MovieID, :new.shipmentQuantity, :new.ShipmentQuantity);
+ dbms_output.put_line(:new.shipmentID || ' ' || :new.MovieID || ' ' || :new.Shipmentquantity);
+
+END;

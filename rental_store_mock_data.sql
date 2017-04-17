@@ -90,9 +90,6 @@ MovieID VARCHAR2(64),
 Ship_Date DATE NOT NULL,
 Ship_Street VARCHAR2(64) NOT NULL,
 Ship_Country VARCHAR2(64) NOT NULL,
-Title VARCHAR2(64),
-Price NUMBER(6,2),
-Genre VARCHAR2(64),
 EmployeeID VARCHAR2(64),
 ShipmentQuantity NUMBER(4),
   CONSTRAINT Shipments_ShipmentID_pk PRIMARY KEY(ShipmentID),
@@ -678,6 +675,21 @@ insert into Specials (specialid, title, discount) values ('70-5831373', 'Ventosa
 insert into Specials (specialid, title, discount) values ('84-1469852', 'Zontrax', 1.15);
 insert into Specials (specialid, title, discount) values ('50-4392985', 'Voyatouch', 7.18);
 
+CREATE OR REPLACE TRIGGER AFTER_MOVIES_INSERTORUPDATE
+ AFTER INSERT OR UPDATE
+ ON SHIPMENTS
+ FOR EACH ROW
+BEGIN
+
+	INSERT INTO Inventory VALUES (:new.shipmentID, :new.MovieID, :new.shipmentQuantity, :new.ShipmentQuantity);
+ dbms_output.put_line(:new.shipmentID || ' ' || :new.MovieID || ' ' || :new.Shipmentquantity);
+
+END;
+
+
+Insert into SHIPMENTS VALUES ('aasdA1', '0002', TO_DATE('2017-06- 25','YYYY-MM-DD'), 'street', 
+'country', 'title', 9.99, 'action',  'DM1234', 100);
+
 -- movies
 insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('73-8265338', '255556316-4', 'Pannier', 13.26, 10, to_date('1991-06-20', 'yyyy-mm-dd'), 'adventure', 0, '03-1059950');
 insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('46-1421504', '720329589-3', 'Biodex', 9.5, 20, to_date('2009-04-30', 'yyyy-mm-dd'), 'adventure', 0, '03-1059950');
@@ -781,6 +793,109 @@ insert into Movies (movieid, serialnum, title, price, rating, release_date, genr
 insert into Movies (movieid, serialnum, title, price, rating, release_date, genre, isonspecial, specialid) values ('87-1179985', '735578602-4', 'Quo Lux', 25.22, 100, to_date('1998-09-09', 'yyyy-mm-dd'), 'action', 0, '03-1059950');
 
 
+--shipments
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('1',       '73-8265338',, to_date('7/24/2009', 'yyyy-mm-dd'), '2 Dakota Way', 'Cameroon', '94-9771106', 16);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('2',       '46-1421504',, to_date('1/29/1990', 'yyyy-mm-dd'), '2 Eggendart Trail', 'Japan', '94-9771106', 21);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('3',       '97-5362702',, to_date('12/25/1988', 'yyyy-mm-dd'), '4 Continental Terrace', 'Venezuela', '94-9771106', 32);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('4',       '76-6555137',, to_date('7/15/2001', 'yyyy-mm-dd'), '78 Straubel Avenue', 'China', '94-9771106', 23);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('5',       '08-3281675',, to_date('2/4/1992', 'yyyy-mm-dd'), '1 International Road', 'Russia', '94-9771106', 19);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('6',       '65-1698400',, to_date('6/13/2012', 'yyyy-mm-dd'), '00 Shopko Road', 'Colombia', '94-9771106', 20);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('7',       '39-9922479',, to_date('12/14/2009', 'yyyy-mm-dd'), '98048 Swallow Plaza', 'Indonesia', '94-9771106', 41);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('8',       '90-7436212',, to_date('2/11/2001', 'yyyy-mm-dd'), '31751 New Castle Way', 'Argentina', '94-9771106', 34);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('9',       '89-8454499',, to_date('5/26/1994', 'yyyy-mm-dd'), '6052 Bellgrove Hill', 'Brazil', '94-9771106', 42);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('10',      '51-0760472',,,to_date('3/12/2009', 'yyyy-mm-dd'), '67 Caliangt Plaza', 'Indonesia', '94-9771106', 21);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('11',      '57-2611019',,,to_date('3/17/2009', 'yyyy-mm-dd'), '011 American Circle', 'Egypt', '94-9771106', 48);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('12',      '71-8961183',,,to_date('12/25/2007', 'yyyy-mm-dd'), '75996 Corscot Hill', 'Argentina', '94-9771106', 39);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('13',      '82-5969295',,,to_date('11/8/2005', 'yyyy-mm-dd'), '27648 Del Mar Hill', 'France', '94-9771106', 49);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('14',      '56-1438689',,,to_date('1/19/2015', 'yyyy-mm-dd'), '8800 Stoughton Parkway', 'China', '94-9771106', 27);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('15',      '01-5371873',,,to_date('6/10/1992', 'yyyy-mm-dd'), '0 Tony Way', 'China', '94-9771106', 50);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('16',      '09-5356081',,,to_date('3/16/2002', 'yyyy-mm-dd'), '070 Doe Crossing Park', 'Ukraine', '94-9771106', 42);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('17',      '69-4680867',,,to_date('12/5/1994', 'yyyy-mm-dd'), '5116 Larry Center', 'China', '94-9771106', 21);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('18',      '18-4023754',,,to_date('11/25/2000', 'yyyy-mm-dd'), '5210 Waywood Alley', 'Philippines', '94-9771106', 15);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('19',      '48-2852655',,,to_date('12/17/2004', 'yyyy-mm-dd'), '7 Barby Avenue', 'China', '94-9771106', 16);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('20',      '78-7659141',,,to_date('4/21/1989', 'yyyy-mm-dd'), '1 Crownhardt Road', 'Nigeria', '94-9771106', 12);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('21',      '20-1683353',,,to_date('12/14/1989', 'yyyy-mm-dd'), '064 Loeprich Road', 'Philippines', '94-9771106', 37);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('22',      '60-3604497',,,to_date('7/2/1995', 'yyyy-mm-dd'), '75 Warrior Court', 'Czech Republic', '94-9771106', 44);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('23',      '02-2806400',,,to_date('2/19/2015', 'yyyy-mm-dd'), '00852 Brentwood Road', 'Tunisia', '94-9771106', 46);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('24',      '23-8182019',,,to_date('4/15/2009', 'yyyy-mm-dd'), '94 Parkside Plaza', 'China', '94-9771106', 24);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('25',      '48-0086984',,,to_date('8/13/1990', 'yyyy-mm-dd'), '393 Riverside Avenue', 'United States', '94-9771106', 31);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('26',      '33-2481165',,,to_date('5/18/1996', 'yyyy-mm-dd'), '69754 Raven Road', 'United States', '94-9771106', 20);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('27',      '34-4869842',,,to_date('9/22/1997', 'yyyy-mm-dd'), '969 Lighthouse Bay Junction', 'China', '94-9771106', 48);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('28',      '93-9646714',,,to_date('10/5/2001', 'yyyy-mm-dd'), '185 Kipling Circle', 'Indonesia', '94-9771106', 35);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('29',      '36-2571856',,,to_date('10/13/1998', 'yyyy-mm-dd'), '70686 Garrison Pass', 'Albania', '94-9771106', 18);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('30',      '31-7497843',,,to_date('2/14/2004', 'yyyy-mm-dd'), '9437 Schmedeman Plaza', 'China', '94-9771106', 50);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('31',      '46-5793201',,,to_date('5/28/2003', 'yyyy-mm-dd'), '61793 Saint Paul Road', 'Poland', '94-9771106', 16);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('32',      '14-0985497',,,to_date('6/22/1997', 'yyyy-mm-dd'), '97 School Park', 'Mexico', '94-9771106', 36);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('33',      '92-2988013',,,to_date('1/27/2014', 'yyyy-mm-dd'), '7842 Swallow Street', 'Pakistan', '94-9771106', 24);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('34',      '39-3358245',,,to_date('4/27/2005', 'yyyy-mm-dd'), '4206 Jay Center', 'Philippines', '94-9771106', 50);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('35',      '48-7669569',,,to_date('3/25/1995', 'yyyy-mm-dd'), '96565 Anzinger Plaza', 'Vietnam', '94-9771106', 17);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('36',      '67-4391442',,,to_date('2/13/2001', 'yyyy-mm-dd'), '969 Superior Crossing', 'Luxembourg', '94-9771106', 28);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('37',      '81-6585139',,,to_date('4/29/2008', 'yyyy-mm-dd'), '89301 Kedzie Drive', 'Indonesia', '94-9771106', 31);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('38',      '36-9793769',,,to_date('10/8/1998', 'yyyy-mm-dd'), '4 Rockefeller Place', 'Honduras', '94-9771106', 37);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('39',      '78-7359446',,,to_date('5/12/2015', 'yyyy-mm-dd'), '1234 Melrose Point', 'Portugal', '94-9771106', 14);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('40',      '45-7004821',,,to_date('3/18/1992', 'yyyy-mm-dd'), '0 Morning Alley', 'Turkmenistan', '94-9771106', 23);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('41',      '78-0937512',,,to_date('9/18/2009', 'yyyy-mm-dd'), '73581 Miller Place', 'French Polynesia', '94-9771106', 28);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('42',      '09-0642772',,,to_date('4/10/1989', 'yyyy-mm-dd'), '83333 Annamark Parkway', 'Russia', '94-9771106', 41);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('43',      '70-3276364',,,to_date('4/22/2005', 'yyyy-mm-dd'), '3838 Arizona Parkway', 'Indonesia', '94-9771106', 48);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('44',      '31-8300561',,,to_date('9/26/2000', 'yyyy-mm-dd'), '71 Westridge Crossing', 'Japan', '94-9771106', 41);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('45',      '28-2773053',,,to_date('3/17/2005', 'yyyy-mm-dd'), '9 Dennis Plaza', 'Indonesia', '94-9771106', 32);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('46',      '53-1117582',,,to_date('9/16/1989', 'yyyy-mm-dd'), '66645 Killdeer Drive', 'China', '94-9771106', 42);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('47',      '65-7026091',,,to_date('9/18/1991', 'yyyy-mm-dd'), '7 Meadow Vale Street', 'Norway', '94-9771106', 31);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('48',      '81-7770678',,,to_date('11/17/2000', 'yyyy-mm-dd'), '59407 Warner Hill', 'China', '94-9771106', 25);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('49',      '23-0420959',,,to_date('12/12/2007', 'yyyy-mm-dd'), '21 Park Meadow Junction', 'Indonesia', '94-9771106', 42);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('50',      '74-6178630',,,to_date('5/30/1999', 'yyyy-mm-dd'), '36 Ridgeview Parkway', 'Indonesia', '94-9771106', 37);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('51',      '43-9800753',,,to_date('11/14/2001', 'yyyy-mm-dd'), '728 Jana Hill', 'China', '94-9771106', 48);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('52',      '12-4992827',,,to_date('9/24/2001', 'yyyy-mm-dd'), '92049 Northfield Way', 'Greece', '94-9771106', 25);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('53',      '94-2441609',,,to_date('5/9/2016', 'yyyy-mm-dd'), '2004 Londonderry Circle', 'Philippines', '94-9771106', 23);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('54',      '99-4865641',,,to_date('2/8/1989', 'yyyy-mm-dd'), '66 Superior Circle', 'Greece', '94-9771106', 37);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('55',      '45-9065957',,,to_date('3/4/2010', 'yyyy-mm-dd'), '35593 Stang Plaza', 'Nigeria', '94-9771106', 26);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('56',      '34-8816328',,,to_date('9/20/2004', 'yyyy-mm-dd'), '0014 Waubesa Crossing', 'Serbia', '94-9771106', 11);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('57',      '40-8458604',,,to_date('12/3/2002', 'yyyy-mm-dd'), '71768 Crescent Oaks Park', 'Netherlands', '94-9771106', 13);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('58',      '88-5711898',,,to_date('5/21/1989', 'yyyy-mm-dd'), '4167 Maywood Center', 'Croatia', '94-9771106', 29);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('59',      '41-3233780',,,to_date('11/3/2015', 'yyyy-mm-dd'), '1135 Crescent Oaks Parkway', 'Brazil', '94-9771106', 40);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('60',      '48-1513905',,,to_date('3/4/2014', 'yyyy-mm-dd'), '20 Autumn Leaf Avenue', 'Indonesia', '94-9771106', 44);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('61',      '69-8004737',,,to_date('6/24/2000', 'yyyy-mm-dd'), '4405 Bashford Avenue', 'Sweden', '94-9771106', 32);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('62',      '00-6730628',,,to_date('10/20/2000', 'yyyy-mm-dd'), '5 Shelley Hill', 'Poland', '94-9771106', 16);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('63',      '32-4710691',,,to_date('5/31/2009', 'yyyy-mm-dd'), '49 Susan Center', 'Indonesia', '94-9771106', 16);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('64',      '19-7302803',,,to_date('10/13/1998', 'yyyy-mm-dd'), '56726 Londonderry Alley', 'Philippines', '94-9771106', 12);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('65',      '30-5951474',,,to_date('2/11/1993', 'yyyy-mm-dd'), '70 Prairieview Terrace', 'China', '94-9771106', 27);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('66',      '46-9440896',,,to_date('3/18/2002', 'yyyy-mm-dd'), '86776 Reinke Terrace', 'Indonesia', '94-9771106', 43);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('67',      '49-1881582',,,to_date('1/18/1991', 'yyyy-mm-dd'), '414 Dryden Way', 'France', '94-9771106', 13);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('68',      '58-4543126',,,to_date('1/14/2005', 'yyyy-mm-dd'), '5443 Rigney Hill', 'China', '94-9771106', 22);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('69',      '23-0293506',,,to_date('12/10/2000', 'yyyy-mm-dd'), '0419 Bay Trail', 'Philippines', '94-9771106', 21);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('70',      '14-4885567',,,to_date('1/4/2007', 'yyyy-mm-dd'), '82359 Quincy Court', 'Ukraine', '94-9771106', 33);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('71',      '77-1195753',,,to_date('10/27/1989', 'yyyy-mm-dd'), '8 Brickson Park Lane', 'China', '94-9771106', 40);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('72',      '52-2565396',,,to_date('6/16/2004', 'yyyy-mm-dd'), '5 Fairview Avenue', 'Germany', '94-9771106', 11);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('73',      '98-1394640',,,to_date('3/19/1993', 'yyyy-mm-dd'), '69218 Lawn Lane', 'China', '94-9771106', 10);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('74',      '20-2559365',,,to_date('1/27/2014', 'yyyy-mm-dd'), '339 Sundown Street', 'Indonesia', '94-9771106', 24);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('75',      '46-4644709',,,to_date('5/23/1998', 'yyyy-mm-dd'), '04 Thackeray Point', 'United States', '94-9771106', 13);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('76',      '09-1412594',,,to_date('8/15/2012', 'yyyy-mm-dd'), '54 Kenwood Point', 'China', '94-9771106', 39);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('77',      '17-6192947',,,to_date('10/19/2005', 'yyyy-mm-dd'), '6860 Florence Terrace', 'Russia', '94-9771106', 27);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('78',      '76-3440021',,,to_date('12/16/1992', 'yyyy-mm-dd'), '77 Corben Road', 'Ukraine', '94-9771106', 39);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('79',      '99-3455230',,,to_date('10/16/2012', 'yyyy-mm-dd'), '96764 Roth Road', 'Italy', '94-9771106', 50);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('80',      '65-6556289',,,to_date('2/19/2000', 'yyyy-mm-dd'), '361 Stoughton Plaza', 'Portugal', '94-9771106', 29);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('81',      '25-3195313',,,to_date('11/27/1995', 'yyyy-mm-dd'), '9517 Michigan Hill', 'Brazil', '94-9771106', 47);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('82',      '76-1660238',,,to_date('12/26/2015', 'yyyy-mm-dd'), '57828 Express Avenue', 'Indonesia', '94-9771106', 49);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('83',      '55-1298958',,,to_date('4/11/1989', 'yyyy-mm-dd'), '36 Waywood Hill', 'Italy', '94-9771106', 45);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('84',      '16-9570895',,,to_date('9/5/2011', 'yyyy-mm-dd'), '1883 Mifflin Circle', 'Indonesia', '94-9771106', 40);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('85',      '16-5249908',,,to_date('5/21/2002', 'yyyy-mm-dd'), '989 Marquette Junction', 'China', '94-9771106', 45);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('86',      '44-3260728',,,to_date('5/29/1989', 'yyyy-mm-dd'), '00 Hoffman Park', 'Finland', '94-9771106', 44);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('87',      '22-8474368',,,to_date('8/4/2010', 'yyyy-mm-dd'), '2 Oak Junction', 'United States', '94-9771106', 45);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('88',      '79-0455326',,,to_date('3/31/1996', 'yyyy-mm-dd'), '37 Brickson Park Court', 'Kazakhstan', '94-9771106', 22);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('89',      '59-6630546',,,to_date('1/20/1997', 'yyyy-mm-dd'), '0985 Springview Trail', 'Poland', '94-9771106', 29);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('90',      '78-1672860',,,to_date('7/16/2000', 'yyyy-mm-dd'), '366 Cambridge Trail', 'Greece', '94-9771106', 17);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('91',      '81-4747135',,,to_date('5/3/2003', 'yyyy-mm-dd'), '619 Straubel Alley', 'Portugal', '94-9771106', 30);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('92',      '25-4938632',,,to_date('4/8/1989', 'yyyy-mm-dd'), '11 Rockefeller Road', 'Ukraine', '94-9771106', 41);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('93',      '85-6193743',,,to_date('1/20/2009', 'yyyy-mm-dd'), '4196 Kim Hill', 'Russia', '94-9771106', 31);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('94',      '96-5316551',,,to_date('9/20/1991', 'yyyy-mm-dd'), '1691 Mockingbird Alley', 'Indonesia', '94-9771106', 17);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('95',      '36-5985588',,,to_date('6/28/2007', 'yyyy-mm-dd'), '2 Evergreen Plaza', 'Tunisia', '94-9771106', 18);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('96',      '54-3696177',,,to_date('2/15/2001', 'yyyy-mm-dd'), '23772 American Ash Center', 'Croatia', '94-9771106', 40);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('97',      '67-5690009',,,to_date('7/19/2011', 'yyyy-mm-dd'), '44596 Browning Place', 'Sweden', '94-9771106', 39);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('98',      '81-0480350',,,to_date('8/8/2002', 'yyyy-mm-dd'), '43234 Milwaukee Parkway', 'Poland', '94-9771106', 39);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('99',      '84-0569091',,,to_date('8/27/2016', 'yyyy-mm-dd'), '2 Warrior Center', 'Indonesia', '94-9771106', 20);
+insert into shipments (shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity) values ('100',      '87-1179985',to_date('9/14/2007', 'yyyy-mm-dd'), '74948 Manley Plaza', 'Chile', '94-9771106', 16);
+
+
 --employees
 insert into employees (employeeid, managerid, address, first_name, last_name, phone_number, title, salary, hire_date) values ('02-7757423', '02-7757423', '1588 Scofield Avenue', 'Lawrence', 'Kennedy', '03-1059950', 'Graphical User Interface', 21815, to_date('2016-02-02', 'yyyy-mm-dd'));
 insert into employees (employeeid, managerid, address, first_name, last_name, phone_number, title, salary, hire_date) values ('94-9771106', '02-7757423', '76 Riverside Circle', 'Fred', 'Burns', '03-1059950', 'multi-state', 7284, to_date('2005-11-28', 'yyyy-mm-dd'));
@@ -793,28 +908,189 @@ insert into employees (employeeid, managerid, address, first_name, last_name, ph
 insert into employees (employeeid, managerid, address, first_name, last_name, phone_number, title, salary, hire_date) values ('04-8228666', '02-7757423', '176 Kings Court', 'Juan', 'Coleman', '03-1059950', 'fault-tolerant', 13032, to_date('2015-08-31', 'yyyy-mm-dd'));
 insert into employees (employeeid, managerid, address, first_name, last_name, phone_number, title, salary, hire_date) values ('78-4412455', '02-7757423', '2942 Northland Court', 'Randy', 'Long', '03-1059950', 'migration', 1806, to_date('2013-12-07', 'yyyy-mm-dd'));
 
---rentals
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('126856643-8', '522237612-5', '48-2852655', '370055606-3', 'Stephen', to_date('2007-09-20', 'yyyy-mm-dd'), to_date('2013-01-29', 'yyyy-mm-dd'), 36, '03-1059950', 0, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('701339923-X', '522237612-5', '78-7659141', '448774166-1', 'Louis', to_date('2007-01-27', 'yyyy-mm-dd'), to_date('2010-11-02', 'yyyy-mm-dd'), 20, '03-1059950', 0, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('263131225-2', '522237612-5', '20-1683353', '995910234-3', 'Jennifer', to_date('2014-02-02', 'yyyy-mm-dd'), to_date('2015-06-14', 'yyyy-mm-dd'), 19, '03-1059950', 0, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('115115634-5', '522237612-5', '60-3604497', '300341959-5', 'Jesse', to_date('2013-07-17', 'yyyy-mm-dd'), to_date('2005-04-19', 'yyyy-mm-dd'), 34, '03-1059950', 0, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('035945460-7', '522237612-5', '02-2806400', '234643340-3', 'Lisa', to_date('2014-10-13', 'yyyy-mm-dd'), to_date('2012-12-22', 'yyyy-mm-dd'), 11, '03-1059950', 1, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('081519397-1', '211746369-X', '23-8182019', '297105755-0', 'Craig', to_date('2016-05-05', 'yyyy-mm-dd'), to_date('2008-08-27', 'yyyy-mm-dd'), 31, '03-1059950', 1, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('413215315-0', '211746369-X', '48-0086984', '864824803-5', 'Harold', to_date('2015-06-16', 'yyyy-mm-dd'), to_date('2005-06-03', 'yyyy-mm-dd'), 26, '03-1059950', 0, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('025430356-0', '211746369-X', '33-2481165', '381481336-7', 'Benjamin', to_date('2014-10-07', 'yyyy-mm-dd'), to_date('2009-12-22', 'yyyy-mm-dd'), 28, '03-1059950', 1, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('772699742-7', '211746369-X', '34-4869842', '424586565-2', 'Jacqueline', to_date('2009-10-27', 'yyyy-mm-dd'), to_date('2010-01-15', 'yyyy-mm-dd'), 7, '03-1059950', 0, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('335867002-3', '211746369-X', '93-9646714', '363960030-4', 'Jacqueline', to_date('2009-11-14', 'yyyy-mm-dd'), to_date('2015-06-03', 'yyyy-mm-dd'), 35, '03-1059950', 0, 0);
+CREATE OR REPLACE TRIGGER AFTER_RENTALS_INSERTORUPDATE
+ AFTER INSERT OR UPDATE
+ ON RENTALS
+ FOR EACH ROW
+BEGIN
+if :NEW.Returned = 0 THEN
+	UPDATE Inventory SET TotalAvailable = (TotalAvailable - 1) 
+	WHERE MovieID = :NEW.MovieID;
+ELSIF :NEW.Returned = 1 THEN
+	UPDATE Inventory SET TotalAvailable = (TotalAvailable + 1) 
+	WHERE MovieID = :NEW.MovieID;
+END IF;
+END;
 
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('81-7770678', '873254713-7', '73-8265338', '255556316-4', 'Stephen', to_date('2007-09-20', 'yyyy-mm-dd'), to_date('2013-01-29', 'yyyy-mm-dd'), 36, '03-1059950', 0, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('23-0420959', '164340820-8', '46-1421504', '720329589-3', 'Louis', to_date('2007-01-27', 'yyyy-mm-dd'), to_date('2010-11-02', 'yyyy-mm-dd'), 20, '03-1059950', 0, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('74-6178630', '122044568-1', '97-5362702', '810417522-X', 'Jennifer', to_date('2014-02-02', 'yyyy-mm-dd'), to_date('2015-06-14', 'yyyy-mm-dd'), 19, '03-1059950', 0, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('43-9800753', '538832647-0', '76-6555137', '905235489-8', 'Jesse', to_date('2013-07-17', 'yyyy-mm-dd'), to_date('2005-04-19', 'yyyy-mm-dd'), 34, '03-1059950', 0, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('12-4992827', '661028343-5', '08-3281675', '557738168-1', 'Lisa', to_date('2014-10-13', 'yyyy-mm-dd'), to_date('2012-12-22', 'yyyy-mm-dd'), 11, '03-1059950', 1, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('94-2441609', '271531545-7', '65-1698400', '621374550-5', 'Craig', to_date('2016-05-05', 'yyyy-mm-dd'), to_date('2008-08-27', 'yyyy-mm-dd'), 31, '03-1059950', 1, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('99-4865641', '882052650-6', '39-9922479', '610371485-0', 'Harold', to_date('2015-06-16', 'yyyy-mm-dd'), to_date('2005-06-03', 'yyyy-mm-dd'), 26, '03-1059950', 0, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('45-9065957', '485311448-3', '90-7436212', '093303497-0', 'Benjamin', to_date('2014-10-07', 'yyyy-mm-dd'), to_date('2009-12-22', 'yyyy-mm-dd'), 28, '03-1059950', 1, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('34-8816328', '868337706-7', '89-8454499', '632364756-7', 'Jacqueline', to_date('2009-10-27', 'yyyy-mm-dd'), to_date('2010-01-15', 'yyyy-mm-dd'), 7, '03-1059950', 0, 0);
-insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('40-8458604', '905302149-3', '51-0760472', '608230575-2', 'Jacqueline', to_date('2009-11-14', 'yyyy-mm-dd'), to_date('2015-06-03', 'yyyy-mm-dd'), 35, '03-1059950', 0, 0);
+--rentals
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('126856643-8', '625241504-9', '94-9771106','79-0455326', '472085166-5', to_date('2007-09-20', 'yyyy-mm-dd'), to_date('2013-01-29', 'yyyy-mm-dd'), 36, '03-1059950', 0, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('701339923-X', '158114470-9', '94-9771106','59-6630546', '002287424-0', to_date('2007-01-27', 'yyyy-mm-dd'), to_date('2010-11-02', 'yyyy-mm-dd'), 20, '03-1059950', 0, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('263131225-2', '099701617-5', '94-9771106','78-1672860', '907291914-9', to_date('2014-02-02', 'yyyy-mm-dd'), to_date('2015-06-14', 'yyyy-mm-dd'), 19, '03-1059950', 0, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('115115634-5', '450905054-2', '94-9771106','81-4747135', '807506521-2',  to_date('2013-07-17', 'yyyy-mm-dd'), to_date('2005-04-19', 'yyyy-mm-dd'), 34, '03-1059950', 0, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('035945460-7', '976665713-0', '94-9771106','25-4938632', '592254959-6',  to_date('2014-10-13', 'yyyy-mm-dd'), to_date('2012-12-22', 'yyyy-mm-dd'), 11, '03-1059950', 1, 0);
+                                                                                                                                                                                
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('081519397-1', '293180405-3', '05-8597812','96-5316551', '959692755-8',  to_date('2016-05-05', 'yyyy-mm-dd'), to_date('2008-08-27', 'yyyy-mm-dd'), 31, '03-1059950', 1, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('413215315-0', '626339413-7', '05-8597812','36-5985588', '926127084-0',  to_date('2015-06-16', 'yyyy-mm-dd'), to_date('2005-06-03', 'yyyy-mm-dd'), 26, '03-1059950', 0, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('025430356-0', '979965680-X', '05-8597812','54-3696177', '219002684-9',  to_date('2014-10-07', 'yyyy-mm-dd'), to_date('2009-12-22', 'yyyy-mm-dd'), 28, '03-1059950', 1, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('772699742-7', '827859022-2', '05-8597812','67-5690009', '803715034-8', to_date('2009-10-27', 'yyyy-mm-dd'), to_date('2010-01-15', 'yyyy-mm-dd'), 7, '03-1059950', 0, 0);
+insert into rentals (rentalid, customerid, employeeid, movieid, serialnumber, date_rented, return_date, price, specialid, paid, returned) values ('335867002-3', '312728582-5', '05-8597812','81-0480350', '146585097-X', to_date('2009-11-14', 'yyyy-mm-dd'), to_date('2015-06-03', 'yyyy-mm-dd'), 35, '03-1059950', 0, 0);
+                                               
+
+
+--actors
+insert into actors (actorid, first_name, last_name) values ('88-5697278', 'Adam', 'Burke');
+insert into actors (actorid, first_name, last_name) values ('60-1955047', 'George', 'Frazier');
+insert into actors (actorid, first_name, last_name) values ('06-9357192', 'Martin', 'Turner');
+insert into actors (actorid, first_name, last_name) values ('39-9651342', 'Adam', 'Martinez');
+insert into actors (actorid, first_name, last_name) values ('63-2846037', 'Anna', 'Richards');
+insert into actors (actorid, first_name, last_name) values ('53-4283011', 'Sharon', 'Sullivan');
+insert into actors (actorid, first_name, last_name) values ('76-8127180', 'Emily', 'Walker');
+insert into actors (actorid, first_name, last_name) values ('65-4070520', 'Lawrence', 'Johnson');
+insert into actors (actorid, first_name, last_name) values ('85-9687546', 'Patricia', 'Jenkins');
+insert into actors (actorid, first_name, last_name) values ('34-9304923', 'Nancy', 'Morris');
+insert into actors (actorid, first_name, last_name) values ('90-7777042', 'Anna', 'Sullivan');
+insert into actors (actorid, first_name, last_name) values ('39-1850089', 'Howard', 'Perry');
+insert into actors (actorid, first_name, last_name) values ('53-7454892', 'Phyllis', 'Kennedy');
+insert into actors (actorid, first_name, last_name) values ('36-3921693', 'Mary', 'Gibson');
+insert into actors (actorid, first_name, last_name) values ('03-3030021', 'Jane', 'Meyer');
+insert into actors (actorid, first_name, last_name) values ('99-6803668', 'Jeremy', 'Gilbert');
+insert into actors (actorid, first_name, last_name) values ('81-2673545', 'Harry', 'Russell');
+insert into actors (actorid, first_name, last_name) values ('07-7978407', 'Bruce', 'Rodriguez');
+insert into actors (actorid, first_name, last_name) values ('63-9738818', 'Lawrence', 'Fisher');
+insert into actors (actorid, first_name, last_name) values ('16-0680939', 'Dennis', 'Lewis');
+insert into actors (actorid, first_name, last_name) values ('48-4018681', 'Edward', 'Hamilton');
+insert into actors (actorid, first_name, last_name) values ('55-3993946', 'Aaron', 'Fuller');
+insert into actors (actorid, first_name, last_name) values ('37-0827296', 'Joyce', 'Willis');
+insert into actors (actorid, first_name, last_name) values ('60-0300796', 'Richard', 'Warren');
+insert into actors (actorid, first_name, last_name) values ('49-5936395', 'Jonathan', 'Gray');
+insert into actors (actorid, first_name, last_name) values ('85-5102149', 'Melissa', 'Pierce');
+insert into actors (actorid, first_name, last_name) values ('19-7469409', 'Harry', 'Little');
+insert into actors (actorid, first_name, last_name) values ('03-2059515', 'Virginia', 'Carroll');
+insert into actors (actorid, first_name, last_name) values ('17-2840227', 'Ashley', 'Simpson');
+insert into actors (actorid, first_name, last_name) values ('17-1106101', 'Alice', 'Nichols');
+insert into actors (actorid, first_name, last_name) values ('14-3106568', 'Shawn', 'Brown');
+insert into actors (actorid, first_name, last_name) values ('48-9002954', 'Henry', 'Henderson');
+insert into actors (actorid, first_name, last_name) values ('65-1773695', 'Donna', 'Spencer');
+insert into actors (actorid, first_name, last_name) values ('40-1161197', 'James', 'Shaw');
+insert into actors (actorid, first_name, last_name) values ('27-2160889', 'Jeffrey', 'Thomas');
+insert into actors (actorid, first_name, last_name) values ('31-9784973', 'Martin', 'Welch');
+insert into actors (actorid, first_name, last_name) values ('33-7040519', 'Justin', 'Vasquez');
+insert into actors (actorid, first_name, last_name) values ('62-8454644', 'Elizabeth', 'Daniels');
+insert into actors (actorid, first_name, last_name) values ('07-2483388', 'Randy', 'Lawson');
+insert into actors (actorid, first_name, last_name) values ('30-2447763', 'Ruby', 'Sanchez');
+
+--movie actors
+insert into movieactors (actorid, movieid) values ('60-1955047', '73-8265338');
+insert into movieactors (actorid, movieid) values ('06-9357192', '46-1421504');
+insert into movieactors (actorid, movieid) values ('39-9651342', '97-5362702');
+insert into movieactors (actorid, movieid) values ('63-2846037', '76-6555137');
+insert into movieactors (actorid, movieid) values ('53-4283011', '08-3281675');
+insert into movieactors (actorid, movieid) values ('76-8127180', '65-1698400');
+insert into movieactors (actorid, movieid) values ('65-4070520', '39-9922479');
+insert into movieactors (actorid, movieid) values ('85-9687546', '90-7436212');
+insert into movieactors (actorid, movieid) values ('34-9304923', '89-8454499');
+insert into movieactors (actorid, movieid) values ('90-7777042', '51-0760472');
+insert into movieactors (actorid, movieid) values ('39-1850089', '57-2611019');
+insert into movieactors (actorid, movieid) values ('53-7454892', '71-8961183');
+insert into movieactors (actorid, movieid) values ('36-3921693', '82-5969295');
+insert into movieactors (actorid, movieid) values ('03-3030021', '56-1438689');
+insert into movieactors (actorid, movieid) values ('99-6803668', '01-5371873');
+insert into movieactors (actorid, movieid) values ('81-2673545', '09-5356081');
+insert into movieactors (actorid, movieid) values ('07-7978407', '69-4680867');
+insert into movieactors (actorid, movieid) values ('63-9738818', '18-4023754');
+insert into movieactors (actorid, movieid) values ('16-0680939', '48-2852655');
+insert into movieactors (actorid, movieid) values ('48-4018681', '78-7659141');
+insert into movieactors (actorid, movieid) values ('55-3993946', '20-1683353');
+insert into movieactors (actorid, movieid) values ('37-0827296', '60-3604497');
+insert into movieactors (actorid, movieid) values ('60-0300796', '02-2806400');
+insert into movieactors (actorid, movieid) values ('49-5936395', '23-8182019');
+insert into movieactors (actorid, movieid) values ('85-5102149', '48-0086984');
+insert into movieactors (actorid, movieid) values ('19-7469409', '33-2481165');
+insert into movieactors (actorid, movieid) values ('03-2059515', '34-4869842');
+insert into movieactors (actorid, movieid) values ('17-2840227', '93-9646714');
+insert into movieactors (actorid, movieid) values ('17-1106101', '36-2571856');
+insert into movieactors (actorid, movieid) values ('14-3106568', '31-7497843');
+insert into movieactors (actorid, movieid) values ('48-9002954', '46-5793201');
+insert into movieactors (actorid, movieid) values ('65-1773695', '14-0985497');
+insert into movieactors (actorid, movieid) values ('40-1161197', '92-2988013');
+insert into movieactors (actorid, movieid) values ('27-2160889', '39-3358245');
+insert into movieactors (actorid, movieid) values ('31-9784973', '48-7669569');
+insert into movieactors (actorid, movieid) values ('33-7040519', '67-4391442');
+insert into movieactors (actorid, movieid) values ('62-8454644', '81-6585139');
+insert into movieactors (actorid, movieid) values ('07-2483388', '36-9793769');
+insert into movieactors (actorid, movieid) values ('30-2447763', '78-7359446');
+insert into movieactors (actorid, movieid) values ('60-1955047', '45-7004821');
+insert into movieactors (actorid, movieid) values ('06-9357192', '78-0937512');
+insert into movieactors (actorid, movieid) values ('39-9651342', '09-0642772');
+insert into movieactors (actorid, movieid) values ('63-2846037', '70-3276364');
+insert into movieactors (actorid, movieid) values ('53-4283011', '31-8300561');
+insert into movieactors (actorid, movieid) values ('76-8127180', '28-2773053');
+insert into movieactors (actorid, movieid) values ('65-4070520', '53-1117582');
+insert into movieactors (actorid, movieid) values ('85-9687546', '65-7026091');
+insert into movieactors (actorid, movieid) values ('34-9304923', '81-7770678');
+insert into movieactors (actorid, movieid) values ('90-7777042', '23-0420959');
+insert into movieactors (actorid, movieid) values ('39-1850089', '74-6178630');
+insert into movieactors (actorid, movieid) values ('53-7454892', '43-9800753');
+insert into movieactors (actorid, movieid) values ('36-3921693', '12-4992827');
+insert into movieactors (actorid, movieid) values ('03-3030021', '94-2441609');
+insert into movieactors (actorid, movieid) values ('99-6803668', '99-4865641');
+insert into movieactors (actorid, movieid) values ('81-2673545', '45-9065957');
+insert into movieactors (actorid, movieid) values ('07-7978407', '34-8816328');
+insert into movieactors (actorid, movieid) values ('63-9738818', '40-8458604');
+insert into movieactors (actorid, movieid) values ('16-0680939', '88-5711898');
+insert into movieactors (actorid, movieid) values ('48-4018681', '41-3233780');
+insert into movieactors (actorid, movieid) values ('55-3993946', '48-1513905');
+insert into movieactors (actorid, movieid) values ('37-0827296', '69-8004737');
+insert into movieactors (actorid, movieid) values ('60-0300796', '00-6730628');
+insert into movieactors (actorid, movieid) values ('49-5936395', '32-4710691');
+insert into movieactors (actorid, movieid) values ('85-5102149', '19-7302803');
+insert into movieactors (actorid, movieid) values ('19-7469409', '30-5951474');
+insert into movieactors (actorid, movieid) values ('03-2059515', '46-9440896');
+insert into movieactors (actorid, movieid) values ('17-2840227', '49-1881582');
+insert into movieactors (actorid, movieid) values ('17-1106101', '58-4543126');
+insert into movieactors (actorid, movieid) values ('14-3106568', '23-0293506');
+insert into movieactors (actorid, movieid) values ('48-9002954', '14-4885567');
+insert into movieactors (actorid, movieid) values ('65-1773695', '77-1195753');
+insert into movieactors (actorid, movieid) values ('40-1161197', '52-2565396');
+insert into movieactors (actorid, movieid) values ('27-2160889', '98-1394640');
+insert into movieactors (actorid, movieid) values ('31-9784973', '20-2559365');
+insert into movieactors (actorid, movieid) values ('33-7040519', '46-4644709');
+insert into movieactors (actorid, movieid) values ('62-8454644', '09-1412594');
+insert into movieactors (actorid, movieid) values ('07-2483388', '17-6192947');
+insert into movieactors (actorid, movieid) values ('30-2447763', '76-3440021');
+insert into movieactors (actorid, movieid) values ('60-1955047', '99-3455230');
+insert into movieactors (actorid, movieid) values ('06-9357192', '65-6556289');
+insert into movieactors (actorid, movieid) values ('39-9651342', '25-3195313');
+insert into movieactors (actorid, movieid) values ('63-2846037', '76-1660238');
+insert into movieactors (actorid, movieid) values ('53-4283011', '55-1298958');
+insert into movieactors (actorid, movieid) values ('76-8127180', '16-9570895');
+insert into movieactors (actorid, movieid) values ('65-4070520', '16-5249908');
+insert into movieactors (actorid, movieid) values ('85-9687546', '44-3260728');
+insert into movieactors (actorid, movieid) values ('34-9304923', '22-8474368');
+insert into movieactors (actorid, movieid) values ('90-7777042', '79-0455326');
+insert into movieactors (actorid, movieid) values ('39-1850089', '59-6630546');
+insert into movieactors (actorid, movieid) values ('53-7454892', '78-1672860');
+insert into movieactors (actorid, movieid) values ('36-3921693', '81-4747135');
+insert into movieactors (actorid, movieid) values ('03-3030021', '25-4938632');
+insert into movieactors (actorid, movieid) values ('99-6803668', '85-6193743');
+insert into movieactors (actorid, movieid) values ('81-2673545', '96-5316551');
+insert into movieactors (actorid, movieid) values ('07-7978407', '36-5985588');
+insert into movieactors (actorid, movieid) values ('63-9738818', '54-3696177');
+insert into movieactors (actorid, movieid) values ('16-0680939', '67-5690009');
+insert into movieactors (actorid, movieid) values ('48-4018681', '81-0480350');
+insert into movieactors (actorid, movieid) values ('55-3993946', '84-0569091');
+insert into movieactors (actorid, movieid) values ('37-0827296', '87-1179985');
+
+--shipments
+insert into shipments(shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity)
+				values(0001, '73-8265338', to_date('2016-05-05', 'yyyy-mm-dd'), 'this is where the store is', 'canada','05-8597812', 100 ); 
+insert into shipments(shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity)
+				values(0002, '46-1421504', to_date('2016-05-05', 'yyyy-mm-dd'), 'this is where the store is', 'canada','05-8597812', 100 ); 
+insert into shipments(shipmentid, movieid, ship_date, ship_street, ship_country, employeeid, shipmentquantity)
+				values(0003, '97-5362702', to_date('2016-05-05', 'yyyy-mm-dd'), 'this is where the store is', 'canada','05-8597812', 100 );
+
+				
+
 
 
 
