@@ -1,0 +1,3 @@
+mock data for rentals, inventory id instead of rental id 
+check jdbc client with new table design 
+look at triggers and procedures from previous labs if we use anty of the code 

@@ -1,5 +1,5 @@
 
-/* 1. Rental Log – Create a trigger which logs movie rentals and returns,
+/* 1. Rental Log ï¿½ Create a trigger which logs movie rentals and returns,
 indicating who has rented movies and when */
 CREATE OR REPLACE TRIGGER AFTER_RENTALS_INSERTORUPDATE
 after INSERT OR UPDATE
@@ -25,7 +25,7 @@ END;
 --TO_DATE('2017-04- 04','YYYY-MM-DD'), 5.99, null, 5.99,'0');
 
 --  alter trigger BEFORE_RENTALS_CanRent disable;
-/* 2. Quantity Update – Create a trigger that automatically updates the quantity of movies in 
+/* 2. Quantity Update ï¿½ Create a trigger that automatically updates the quantity of movies in 
 stock when a film is rented or returned. */
  CREATE OR REPLACE TRIGGER AFTER_RENTALS_INSERTORUPDATE
  AFTER INSERT OR UPDATE
@@ -69,7 +69,7 @@ BEGIN
   end if;    
 end;  
 
-/* 2. Quantity Update – Create a trigger that automatically updates the quantity of movies in 
+/* 2. Quantity Update ï¿½ Create a trigger that automatically updates the quantity of movies in 
 stock when a film is rented or returned. */
  CREATE OR REPLACE TRIGGER AFTER_RENTALS_INSERTORUPDATE
  AFTER INSERT OR UPDATE
@@ -120,7 +120,7 @@ CREATE OR REPLACE TRIGGER AFTER_SHIPMENTS_INSERTORUPDATE
  FOR EACH ROW
 BEGIN
 
-	INSERT INTO Inventory VALUES (:new.shipmentID, :new.MovieID, :new.shipmentQuantity, :new.ShipmentQuantity);
+	INSERT INTO Inventory VALUES (:new.shipmentID + :new.MovieID , :new.shipmentID, :new.MovieID;
  dbms_output.put_line(:new.shipmentID || ' ' || :new.MovieID || ' ' || :new.Shipmentquantity);
 
 END;
