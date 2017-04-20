@@ -144,6 +144,9 @@ public class Lab9View extends JFrame {
 			if (Arrays.equals(hash, tempHash))
 				result = true;
 		}
+		
+		Lab9CustomerScreen lab = new Lab9CustomerScreen();
+		lab.setVisible(true);
 	}
 	
 	public void NewUserEvent() {
